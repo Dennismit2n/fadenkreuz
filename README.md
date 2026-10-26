@@ -28,7 +28,7 @@ In the installer you choose both or just one of them. They do not depend on each
 ## Getting started
 
 1. Download **`Fadenkreuz-Setup-1.0.0.exe`** from the [releases](../../releases/latest). Windows will say "unknown publisher" – the setup is not signed, because that costs money. Continue via **More info → Run anyway**.
-2. Choose **only for me** (no admin rights needed) or **for all users**, then the parts you want.
+2. Choose **Install for me only** (no admin rights needed) or **Install for all users**, then the parts you want.
 3. Start **Fadenkreuz**: a green cross appears in the middle of the screen.
 4. Open **Fadenkreuz-Editor**, draw, click **Speichern unter …** (*Save as*) once and save as `fadenkreuz.bmp` in `Documents\Fadenkreuz`. The editor remembers the file; with **live** switched on, every stroke shows up on screen within a second.
 
@@ -60,7 +60,7 @@ Press <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>F10</kbd> while a game is in front, an
 
 ## On top of everything (optional)
 
-Normally the crosshair is an "always on top" window: above your game, but below the Start menu, taskbar pop-ups and some overlays. If you install **for all users**, the installer offers **Show on top of everything**.
+Normally the crosshair is an "always on top" window: above your game, but below the Start menu, taskbar pop-ups and some overlays. If you choose **Install for all users**, the installer offers **Show on top of everything**.
 
 Windows only allows that (it is called *UIAccess*, the same as for the on-screen keyboard) for signed programs inside *Program Files*. So the setup creates a certificate that is only valid on this PC, signs Fadenkreuz with it and deletes the private key immediately afterwards – nobody can sign anything else with it. Uninstalling removes the certificate again. If anything goes wrong, the normal version stays in place.
 

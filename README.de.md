@@ -28,7 +28,7 @@ Im Installer wählst du beide oder nur einen der beiden. Sie hängen nicht vonei
 ## So geht’s los
 
 1. Lade **`Fadenkreuz-Setup-1.0.0.exe`** aus den [Releases](../../releases/latest). Windows meldet „Unbekannter Herausgeber“ – das Setup ist nicht signiert, weil das Geld kostet. Weiter mit **Weitere Informationen → Trotzdem ausführen**.
-2. Wähle **nur für mich** (ohne Adminrechte) oder **für alle Benutzer**, dann die Teile, die du willst.
+2. Wähle **Installation nur für Sie** (ohne Adminrechte) oder **Installation für alle Benutzer**, dann die Teile, die du willst.
 3. Starte **Fadenkreuz**: In der Bildschirmmitte erscheint ein grünes Kreuz.
 4. Öffne den **Fadenkreuz-Editor**, zeichne, klick einmal auf **Speichern unter …** und speichere als `fadenkreuz.bmp` in `Dokumente\Fadenkreuz`. Der Editor merkt sich die Datei; mit **live** erscheint jeder Strich innerhalb einer Sekunde auf dem Bildschirm.
 
@@ -60,7 +60,7 @@ Drück <kbd>Strg</kbd>+<kbd>Alt</kbd>+<kbd>F10</kbd>, während ein Spiel vorne i
 
 ## Über allem (auf Wunsch)
 
-Normalerweise ist das Kreuz ein „immer oben“-Fenster: über deinem Spiel, aber unter Startmenü, Taskleisten-Fenstern und manchen Overlays. Installierst du **für alle Benutzer**, bietet das Setup **Über allem anzeigen** an.
+Normalerweise ist das Kreuz ein „immer oben“-Fenster: über deinem Spiel, aber unter Startmenü, Taskleisten-Fenstern und manchen Overlays. Wählst du **Installation für alle Benutzer**, bietet das Setup **Über allem anzeigen** an.
 
 Das erlaubt Windows (es heißt *UIAccess*, wie bei der Bildschirmtastatur) nur signierten Programmen im Ordner *Programme*. Darum legt das Setup ein Zertifikat an, das nur auf diesem PC gilt, signiert Fadenkreuz damit und löscht den privaten Schlüssel sofort wieder – damit kann niemand etwas anderes signieren. Beim Deinstallieren verschwindet das Zertifikat wieder. Geht dabei etwas schief, bleibt die normale Fassung.
 
