@@ -153,62 +153,66 @@ kbd { display: inline-block; min-width: 18px; padding: 0 5px; border-radius: 4px
 </head>
 <body>
 <header class="kopf">
-  <div class="marke"><img src="editor-symbol.png" alt="">Fadenkreuz-Editor</div>
+  <div class="marke"><img src="editor-symbol.png" alt=""><span data-t="marke">Fadenkreuz-Editor</span></div>
+  <span class="segment" role="group" data-t-aria="sprache">
+    <button class="knopf" data-sprache="de" lang="de" title="Deutsch">DE</button>
+    <button class="knopf" data-sprache="en" lang="en" title="English">EN</button>
+  </span>
   <span class="chip" id="datei" data-art="aus" role="status"><i class="lampe"></i><span id="datei-text">nicht verbunden</span></span>
-  <button class="knopf" id="verbinden" hidden>Wieder verbinden</button>
-  <button class="knopf" id="oeffnen" title="BMP laden und damit verbinden">Öffnen …</button>
+  <button class="knopf" id="verbinden" data-t="wiederVerbinden" hidden>Wieder verbinden</button>
+  <button class="knopf" id="oeffnen" data-t="oeffnen" data-t-title="oeffnenTitel">Öffnen …</button>
   <input type="file" id="datei-wahl" accept=".bmp,image/bmp" hidden>
-  <button class="knopf" id="speichern-unter" title="Datei wählen, in die gespeichert wird">Speichern unter …</button>
-  <button class="knopf primaer" id="speichern" title="Strg+S">Speichern</button>
-  <label class="schalter" title="Jede Änderung sofort in die Datei schreiben"><input type="checkbox" id="live"><span class="bahn"></span>live</label>
+  <button class="knopf" id="speichern-unter" data-t="speichernUnter" data-t-title="speichernUnterTitel">Speichern unter …</button>
+  <button class="knopf primaer" id="speichern" data-t="speichern" data-t-title="speichernTitel">Speichern</button>
+  <label class="schalter" data-t-title="liveTitel"><input type="checkbox" id="live"><span class="bahn"></span>live</label>
 </header>
 
 <main class="arbeit">
   <section class="buehne">
     <div class="leiste">
-      <div class="gruppe" role="toolbar" aria-label="Werkzeuge">
-        <button class="knopf ikon" data-werkzeug="stift" title="Stift (B)"><svg viewBox="0 0 24 24"><path d="M4 20l1-4.5L15.5 5a2.1 2.1 0 0 1 3 3L8 18.5 4 20z"/><path d="M13.5 7l3 3"/></svg></button>
-        <button class="knopf ikon" data-werkzeug="radierer" title="Radierer (E) – rechte Maustaste radiert immer"><svg viewBox="0 0 24 24"><path d="M9 20h11"/><path d="M5.6 14.4l7.2-7.2a2 2 0 0 1 2.8 0l2.2 2.2a2 2 0 0 1 0 2.8L12 20H9l-3.4-3.4a1.6 1.6 0 0 1 0-2.2z"/><path d="M9.5 10.5l5 5"/></svg></button>
-        <button class="knopf ikon" data-werkzeug="linie" title="Linie (L)"><svg viewBox="0 0 24 24"><path d="M6 18L18 6"/><circle cx="6" cy="18" r="1.6"/><circle cx="18" cy="6" r="1.6"/></svg></button>
-        <button class="knopf ikon" data-werkzeug="kreis" title="Ring um den Startpunkt (K)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.5"/></svg></button>
-        <button class="knopf ikon" data-werkzeug="oval" title="Gefülltes Oval um den Startpunkt (O)"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="8.5" ry="4.8" fill="currentColor" fill-opacity=".3"/></svg></button>
-        <button class="knopf ikon" data-werkzeug="fuellen" title="Füllen (F)"><svg viewBox="0 0 24 24"><path d="M5 12.5l6.5-6.5 6.5 6.5-6.5 6.5z"/><path d="M5 12.5h13"/><path d="M20 15.5s1.6 1.9 1.6 3a1.6 1.6 0 0 1-3.2 0c0-1.1 1.6-3 1.6-3z"/></svg></button>
-        <button class="knopf ikon" data-werkzeug="pipette" title="Farbe aufnehmen (I)"><svg viewBox="0 0 24 24"><path d="M14.5 4.5l5 5"/><path d="M17 7l-9 9-3.5 1.5L6 14l9-9"/><path d="M13 6l5 5"/></svg></button>
+      <div class="gruppe" role="toolbar" data-t-aria="werkzeuge">
+        <button class="knopf ikon" data-werkzeug="stift" data-t-title="wStift"><svg viewBox="0 0 24 24"><path d="M4 20l1-4.5L15.5 5a2.1 2.1 0 0 1 3 3L8 18.5 4 20z"/><path d="M13.5 7l3 3"/></svg></button>
+        <button class="knopf ikon" data-werkzeug="radierer" data-t-title="wRadierer"><svg viewBox="0 0 24 24"><path d="M9 20h11"/><path d="M5.6 14.4l7.2-7.2a2 2 0 0 1 2.8 0l2.2 2.2a2 2 0 0 1 0 2.8L12 20H9l-3.4-3.4a1.6 1.6 0 0 1 0-2.2z"/><path d="M9.5 10.5l5 5"/></svg></button>
+        <button class="knopf ikon" data-werkzeug="linie" data-t-title="wLinie"><svg viewBox="0 0 24 24"><path d="M6 18L18 6"/><circle cx="6" cy="18" r="1.6"/><circle cx="18" cy="6" r="1.6"/></svg></button>
+        <button class="knopf ikon" data-werkzeug="kreis" data-t-title="wKreis"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.5"/></svg></button>
+        <button class="knopf ikon" data-werkzeug="oval" data-t-title="wOval"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="8.5" ry="4.8" fill="currentColor" fill-opacity=".3"/></svg></button>
+        <button class="knopf ikon" data-werkzeug="fuellen" data-t-title="wFuellen"><svg viewBox="0 0 24 24"><path d="M5 12.5l6.5-6.5 6.5 6.5-6.5 6.5z"/><path d="M5 12.5h13"/><path d="M20 15.5s1.6 1.9 1.6 3a1.6 1.6 0 0 1-3.2 0c0-1.1 1.6-3 1.6-3z"/></svg></button>
+        <button class="knopf ikon" data-werkzeug="pipette" data-t-title="wPipette"><svg viewBox="0 0 24 24"><path d="M14.5 4.5l5 5"/><path d="M17 7l-9 9-3.5 1.5L6 14l9-9"/><path d="M13 6l5 5"/></svg></button>
       </div>
       <div class="gruppe">
-        <span class="gruppe-titel">Spiegeln</span>
-        <div class="segment" role="group" aria-label="Spiegeln">
-          <button class="knopf" data-setze="spiegel" data-v="aus" title="nicht spiegeln (M wechselt)">aus</button>
-          <button class="knopf" data-setze="spiegel" data-v="h" title="links ↔ rechts">⇆</button>
-          <button class="knopf" data-setze="spiegel" data-v="v" title="oben ↕ unten">⇅</button>
-          <button class="knopf" data-setze="spiegel" data-v="4" title="4-fach">✛</button>
+        <span class="gruppe-titel" data-t="spiegeln">Spiegeln</span>
+        <div class="segment" role="group" data-t-aria="spiegeln">
+          <button class="knopf" data-setze="spiegel" data-v="aus" data-t="aus" data-t-title="spiegelAus">aus</button>
+          <button class="knopf" data-setze="spiegel" data-v="h" data-t-title="spiegelH">⇆</button>
+          <button class="knopf" data-setze="spiegel" data-v="v" data-t-title="spiegelV">⇅</button>
+          <button class="knopf" data-setze="spiegel" data-v="4" data-t-title="spiegel4">✛</button>
         </div>
       </div>
       <div class="gruppe">
-        <button class="knopf ikon" id="rueck" title="Rückgängig (Strg+Z)"><svg viewBox="0 0 24 24"><path d="M9 5L5 9l4 4"/><path d="M5 9h9.5a4.5 4.5 0 0 1 0 9H9"/></svg></button>
-        <button class="knopf ikon" id="vor" title="Wiederholen (Strg+Y)"><svg viewBox="0 0 24 24"><path d="M15 5l4 4-4 4"/><path d="M19 9H9.5a4.5 4.5 0 0 0 0 9H15"/></svg></button>
-        <button class="knopf ikon" id="leeren" title="Alles leeren"><svg viewBox="0 0 24 24"><path d="M5 7h14"/><path d="M10 7V5h4v2"/><path d="M7 7l1 12h8l1-12"/></svg></button>
+        <button class="knopf ikon" id="rueck" data-t-title="rueckgaengig"><svg viewBox="0 0 24 24"><path d="M9 5L5 9l4 4"/><path d="M5 9h9.5a4.5 4.5 0 0 1 0 9H9"/></svg></button>
+        <button class="knopf ikon" id="vor" data-t-title="wiederholen"><svg viewBox="0 0 24 24"><path d="M15 5l4 4-4 4"/><path d="M19 9H9.5a4.5 4.5 0 0 0 0 9H15"/></svg></button>
+        <button class="knopf ikon" id="leeren" data-t-title="leeren"><svg viewBox="0 0 24 24"><path d="M5 7h14"/><path d="M10 7V5h4v2"/><path d="M7 7l1 12h8l1-12"/></svg></button>
       </div>
     </div>
 
-    <div class="feld" id="feld"><canvas id="raster" aria-label="Zeichenfeld"></canvas></div>
+    <div class="feld" id="feld"><canvas id="raster" data-t-aria="zeichenfeld"></canvas></div>
 
     <div class="fuss">
       <span id="pos">Pixel –</span>
-      <span class="stepper">Feld
-        <button class="knopf" id="kleiner" title="Feld verkleinern">−</button>
+      <span class="stepper"><span data-t="feld">Feld</span>
+        <button class="knopf" id="kleiner" data-t-title="kleiner">−</button>
         <b id="groesse">21 × 21</b>
-        <button class="knopf" id="groesser" title="Feld vergrößern">+</button>
+        <button class="knopf" id="groesser" data-t-title="groesser">+</button>
       </span>
-      <span>Bild <b id="bildmass">–</b></span>
-      <span><b id="anzahl">0</b> Pixel</span>
+      <span><span data-t="bild">Bild</span> <b id="bildmass">–</b></span>
+      <span><b id="anzahl">0</b> <span data-t="pixelAnzahl">Pixel</span></span>
       <span id="meldung" role="status"></span>
-      <span class="rechts">Grund
-        <span class="segment" role="group" aria-label="Hintergrund des Felds">
-          <button class="knopf" data-setze="feldGrund" data-v="kariert">kariert</button>
-          <button class="knopf" data-setze="feldGrund" data-v="dunkel">dunkel</button>
-          <button class="knopf" data-setze="feldGrund" data-v="hell">hell</button>
-          <button class="knopf" data-setze="feldGrund" data-v="szene">Szene</button>
+      <span class="rechts"><span data-t="grund">Grund</span>
+        <span class="segment" role="group" data-t-aria="grundFeld">
+          <button class="knopf" data-setze="feldGrund" data-v="kariert" data-t="kariert">kariert</button>
+          <button class="knopf" data-setze="feldGrund" data-v="dunkel" data-t="dunkel">dunkel</button>
+          <button class="knopf" data-setze="feldGrund" data-v="hell" data-t="hell">hell</button>
+          <button class="knopf" data-setze="feldGrund" data-v="szene" data-t="szene">Szene</button>
         </span>
       </span>
     </div>
@@ -216,85 +220,85 @@ kbd { display: inline-block; min-width: 18px; padding: 0 5px; border-radius: 4px
 
   <aside class="panel">
     <section class="karte">
-      <h2>Farbe</h2>
+      <h2 data-t="farbe">Farbe</h2>
       <div class="zeile">
-        <label class="farbwahl" title="Farbe wählen"><i id="farbe-chip"></i><input type="color" id="farbe" aria-label="Farbe"></label>
-        <input class="hex" id="farbe-hex" spellcheck="false" aria-label="Farbe als Hex-Wert">
+        <label class="farbwahl" data-t-title="farbeWaehlen"><i id="farbe-chip"></i><input type="color" id="farbe" data-t-aria="farbe"></label>
+        <input class="hex" id="farbe-hex" spellcheck="false" data-t-aria="farbeHex">
       </div>
       <div class="muster" id="muster"></div>
-      <div class="regler"><span>Deckkraft</span><input type="range" min="10" max="100" data-wert="deck"><output data-zeigt="deck" data-einheit="%"></output></div>
+      <div class="regler"><span data-t="deckkraft">Deckkraft</span><input type="range" min="10" max="100" data-wert="deck"><output data-zeigt="deck" data-einheit="%"></output></div>
     </section>
 
     <section class="karte">
-      <h2>Umrandung</h2>
+      <h2 data-t="umrandung">Umrandung</h2>
       <div class="zeile">
-        <span class="segment" role="group" aria-label="Randstärke">
-          <button class="knopf" data-setze="rand" data-v="0">aus</button>
+        <span class="segment" role="group" data-t-aria="randStaerke">
+          <button class="knopf" data-setze="rand" data-v="0" data-t="aus">aus</button>
           <button class="knopf" data-setze="rand" data-v="1">1</button>
           <button class="knopf" data-setze="rand" data-v="2">2</button>
           <button class="knopf" data-setze="rand" data-v="3">3</button>
           <button class="knopf" data-setze="rand" data-v="4">4</button>
         </span>
-        <label class="farbwahl klein" title="Randfarbe"><i id="rand-chip"></i><input type="color" id="rand-farbe" aria-label="Randfarbe"></label>
+        <label class="farbwahl klein" data-t-title="randFarbe"><i id="rand-chip"></i><input type="color" id="rand-farbe" data-t-aria="randFarbe"></label>
       </div>
-      <div class="regler"><span>Deckkraft</span><input type="range" min="10" max="100" data-wert="randDeck"><output data-zeigt="randDeck" data-einheit="%"></output></div>
-      <div class="zeile"><label class="schalter"><input type="checkbox" id="weich"><span class="bahn"></span>weich auslaufen</label></div>
+      <div class="regler"><span data-t="deckkraft">Deckkraft</span><input type="range" min="10" max="100" data-wert="randDeck"><output data-zeigt="randDeck" data-einheit="%"></output></div>
+      <div class="zeile"><label class="schalter"><input type="checkbox" id="weich"><span class="bahn"></span><span data-t="weich">weich auslaufen</span></label></div>
     </section>
 
     <section class="karte">
-      <h2>Meine Fadenkreuze</h2>
+      <h2 data-t="meine">Meine Fadenkreuze</h2>
       <div class="vorlagen" id="meine"></div>
-      <p class="hinweis" id="meine-leer" style="margin-top: 0">Noch keine eigenen. Zeichne eins, gib ihm einen Namen und merk es dir hier.</p>
+      <p class="hinweis" id="meine-leer" style="margin-top: 0" data-t="meineLeer">Noch keine eigenen. Zeichne eins, gib ihm einen Namen und merk es dir hier.</p>
       <div class="zeile">
-        <input class="name" id="meine-name" placeholder="Name, z. B. Oval klein" maxlength="24" spellcheck="false" aria-label="Name für dein Fadenkreuz">
-        <button class="knopf primaer" id="meine-speichern" title="Aktuelles Fadenkreuz als Preset merken (gleicher Name überschreibt)">Merken</button>
+        <input class="name" id="meine-name" maxlength="24" spellcheck="false" data-t-ph="meineName" data-t-aria="meineNameAria">
+        <button class="knopf primaer" id="meine-speichern" data-t="merken" data-t-title="merkenTitel">Merken</button>
       </div>
       <div class="zeile">
-        <button class="knopf" id="meine-export" title="Alle eigenen Fadenkreuze als Datei sichern">Sichern …</button>
-        <button class="knopf" id="meine-import" title="Gesicherte Fadenkreuze aus einer Datei einlesen">Einlesen …</button>
+        <button class="knopf" id="meine-export" data-t="sichern" data-t-title="sichernTitel">Sichern …</button>
+        <button class="knopf" id="meine-import" data-t="einlesen" data-t-title="einlesenTitel">Einlesen …</button>
         <input type="file" id="meine-datei" accept=".json,application/json" hidden>
       </div>
     </section>
 
     <section class="karte">
-      <h2>Vorlagen</h2>
+      <h2 data-t="vorlagen">Vorlagen</h2>
       <div class="vorlagen" id="vorlagen"></div>
-      <div class="regler"><span>Größe</span><input type="range" min="1" max="20" data-wert="arm"><output data-zeigt="arm"></output></div>
-      <div class="regler"><span>Dicke</span><input type="range" min="1" max="7" step="2" data-wert="dicke"><output data-zeigt="dicke"></output></div>
-      <div class="regler"><span>Lücke</span><input type="range" min="0" max="10" data-wert="luecke"><output data-zeigt="luecke"></output></div>
+      <div class="regler"><span data-t="groesse">Größe</span><input type="range" min="1" max="20" data-wert="arm"><output data-zeigt="arm"></output></div>
+      <div class="regler"><span data-t="dicke">Dicke</span><input type="range" min="1" max="7" step="2" data-wert="dicke"><output data-zeigt="dicke"></output></div>
+      <div class="regler"><span data-t="luecke">Lücke</span><input type="range" min="0" max="10" data-wert="luecke"><output data-zeigt="luecke"></output></div>
     </section>
 
     <section class="karte">
-      <h2>Vorschau</h2>
+      <h2 data-t="vorschau">Vorschau</h2>
       <canvas id="vorschau"></canvas>
       <div class="zeile" style="justify-content: space-between">
-        <span class="segment" role="group" aria-label="Vergrößerung">
-          <button class="knopf" data-setze="zoom" data-v="1" title="echte Größe am Bildschirm">1:1</button>
+        <span class="segment" role="group" data-t-aria="zoom">
+          <button class="knopf" data-setze="zoom" data-v="1" data-t-title="zoomEcht">1:1</button>
           <button class="knopf" data-setze="zoom" data-v="2">2×</button>
           <button class="knopf" data-setze="zoom" data-v="4">4×</button>
         </span>
-        <span class="segment" role="group" aria-label="Hintergrund der Vorschau">
-          <button class="knopf" data-setze="vorschauGrund" data-v="szene">Szene</button>
-          <button class="knopf" data-setze="vorschauGrund" data-v="dunkel">dunkel</button>
-          <button class="knopf" data-setze="vorschauGrund" data-v="hell">hell</button>
+        <span class="segment" role="group" data-t-aria="grundVorschau">
+          <button class="knopf" data-setze="vorschauGrund" data-v="szene" data-t="szene">Szene</button>
+          <button class="knopf" data-setze="vorschauGrund" data-v="dunkel" data-t="dunkel">dunkel</button>
+          <button class="knopf" data-setze="vorschauGrund" data-v="hell" data-t="hell">hell</button>
         </span>
       </div>
     </section>
 
     <details class="karte" id="hilfe">
-      <summary>Ablage &amp; Tasten</summary>
-      <div class="leise">Das Kreuz liest diese Datei:</div>
-      <div class="pfad"><code>Dokumente\Fadenkreuz\fadenkreuz.bmp</code></div>
-      <p class="hinweis">Einmal „Speichern unter …“ genau dort speichern. Danach merkt sich der Editor die Datei, und „live“ schreibt jede Änderung hinein. Das Kreuz übernimmt sie nach spätestens einer Sekunde. Liegt neben der fadenkreuz.exe eine <code>datenordner.txt</code>, gilt der Ordner, der darin steht.</p>
+      <summary data-t="ablage">Ablage &amp; Tasten</summary>
+      <div class="leise" data-t="liestDatei">Das Kreuz liest diese Datei:</div>
+      <div class="pfad"><code data-t="pfad">Dokumente\Fadenkreuz\fadenkreuz.bmp</code></div>
+      <p class="hinweis" data-t-html="ablageHinweis"></p>
       <div class="tasten" style="margin-top: 10px">
-        <span><kbd>Strg</kbd>+<kbd>Alt</kbd>+<kbd>F9</kbd></span><span>Kreuz ein/aus</span>
-        <span><kbd>Strg</kbd>+<kbd>Alt</kbd>+<kbd>F10</kbd></span><span>im Spiel: nur dort zeigen (nochmal: streichen)</span>
-        <span><kbd>Strg</kbd>+<kbd>Alt</kbd>+<kbd>F12</kbd></span><span>Kreuz beenden</span>
-        <span><kbd>B</kbd> <kbd>E</kbd> <kbd>L</kbd> <kbd>K</kbd> <kbd>O</kbd> <kbd>F</kbd> <kbd>I</kbd></span><span>Stift, Radierer, Linie, Ring, Oval, Füllen, Pipette</span>
-        <span><kbd>M</kbd></span><span>Spiegeln umschalten</span>
-        <span><kbd>Strg</kbd>+<kbd>Z</kbd> / <kbd>Y</kbd></span><span>rückgängig / wiederholen</span>
-        <span><kbd>Strg</kbd>+<kbd>S</kbd></span><span>speichern</span>
-        <span>rechte Maustaste</span><span>radieren</span>
+        <span><kbd data-t="strg">Strg</kbd>+<kbd>Alt</kbd>+<kbd>F9</kbd></span><span data-t="tasteAnAus">Kreuz ein/aus</span>
+        <span><kbd data-t="strg">Strg</kbd>+<kbd>Alt</kbd>+<kbd>F10</kbd></span><span data-t="tasteSpiel">im Spiel: nur dort zeigen (nochmal: streichen)</span>
+        <span><kbd data-t="strg">Strg</kbd>+<kbd>Alt</kbd>+<kbd>F12</kbd></span><span data-t="tasteEnde">Kreuz beenden</span>
+        <span><kbd>B</kbd> <kbd>E</kbd> <kbd>L</kbd> <kbd>K</kbd> <kbd>O</kbd> <kbd>F</kbd> <kbd>I</kbd></span><span data-t="tasteWerkzeuge">Stift, Radierer, Linie, Ring, Oval, Füllen, Pipette</span>
+        <span><kbd>M</kbd></span><span data-t="tasteSpiegeln">Spiegeln umschalten</span>
+        <span><kbd data-t="strg">Strg</kbd>+<kbd>Z</kbd> / <kbd>Y</kbd></span><span data-t="tasteRueck">rückgängig / wiederholen</span>
+        <span><kbd data-t="strg">Strg</kbd>+<kbd>S</kbd></span><span data-t="tasteSpeichern">speichern</span>
+        <span data-t="rechteMaus">rechte Maustaste</span><span data-t="radieren">radieren</span>
       </div>
     </details>
   </aside>
@@ -306,6 +310,128 @@ const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 const MIN = 5, MAX = 63;
 const SPEICHER = 'fadenkreuz2';
+
+// ---------- Sprache (Deutsch / Englisch) ----------
+// Im HTML tragen Elemente data-t (Text), data-t-html, data-t-title, data-t-aria
+// oder data-t-ph (Platzhalter) mit einem Schlüssel aus dieser Tabelle.
+const TEXTE = {
+  de: {
+    titel: 'Fadenkreuz-Editor', marke: 'Fadenkreuz-Editor', sprache: 'Sprache',
+    wiederVerbinden: 'Wieder verbinden', oeffnen: 'Öffnen …', oeffnenTitel: 'BMP laden und damit verbinden',
+    speichernUnter: 'Speichern unter …', speichernUnterTitel: 'Datei wählen, in die gespeichert wird',
+    speichern: 'Speichern', speichernTitel: 'Strg+S', liveTitel: 'Jede Änderung sofort in die Datei schreiben',
+    werkzeuge: 'Werkzeuge', wStift: 'Stift (B)', wRadierer: 'Radierer (E) – rechte Maustaste radiert immer',
+    wLinie: 'Linie (L)', wKreis: 'Ring um den Startpunkt (K)', wOval: 'Gefülltes Oval um den Startpunkt (O)',
+    wFuellen: 'Füllen (F)', wPipette: 'Farbe aufnehmen (I)',
+    spiegeln: 'Spiegeln', aus: 'aus', spiegelAus: 'nicht spiegeln (M wechselt)', spiegelH: 'links ↔ rechts',
+    spiegelV: 'oben ↕ unten', spiegel4: '4-fach',
+    rueckgaengig: 'Rückgängig (Strg+Z)', wiederholen: 'Wiederholen (Strg+Y)', leeren: 'Alles leeren',
+    zeichenfeld: 'Zeichenfeld', pixelAnzahl: 'Pixel', feld: 'Feld', kleiner: 'Feld verkleinern', groesser: 'Feld vergrößern', bild: 'Bild',
+    grund: 'Grund', grundFeld: 'Hintergrund des Felds', kariert: 'kariert', dunkel: 'dunkel', hell: 'hell', szene: 'Szene',
+    farbe: 'Farbe', farbeWaehlen: 'Farbe wählen', farbeHex: 'Farbe als Hex-Wert', farbeMuster: c => `Farbe ${c}`,
+    deckkraft: 'Deckkraft', umrandung: 'Umrandung', randStaerke: 'Randstärke', randFarbe: 'Randfarbe', weich: 'weich auslaufen',
+    meine: 'Meine Fadenkreuze', meineLeer: 'Noch keine eigenen. Zeichne eins, gib ihm einen Namen und merk es dir hier.',
+    meineName: 'Name, z. B. Oval klein', meineNameAria: 'Name für dein Fadenkreuz',
+    merken: 'Merken', merkenTitel: 'Aktuelles Fadenkreuz als Preset merken (gleicher Name überschreibt)',
+    sichern: 'Sichern …', sichernTitel: 'Alle eigenen Fadenkreuze als Datei sichern',
+    einlesen: 'Einlesen …', einlesenTitel: 'Gesicherte Fadenkreuze aus einer Datei einlesen',
+    vorlagen: 'Vorlagen', groesse: 'Größe', dicke: 'Dicke', luecke: 'Lücke',
+    vorlageKreuz: 'Kreuz', vorlageKreuzpunkt: 'Kreuz + Punkt', vorlagePunkt: 'Punkt', vorlageRund: 'Punkt rund',
+    vorlageT: 'T', vorlageX: 'X', vorlageKreis: 'Ring + Punkt', vorlageOval: 'Oval weiß',
+    vorlageOvalTitel: 'Weißes Oval mit weichem schwarzem Rand',
+    vorschau: 'Vorschau', zoom: 'Vergrößerung', zoomEcht: 'echte Größe am Bildschirm', grundVorschau: 'Hintergrund der Vorschau',
+    ablage: 'Ablage & Tasten', liestDatei: 'Das Kreuz liest diese Datei:', pfad: 'Dokumente\\Fadenkreuz\\fadenkreuz.bmp',
+    ablageHinweis: 'Einmal „Speichern unter …“ genau dort speichern. Danach merkt sich der Editor die Datei, und „live“ schreibt jede Änderung hinein. Das Kreuz übernimmt sie nach spätestens einer Sekunde. Liegt neben der fadenkreuz.exe eine <code>datenordner.txt</code>, gilt der Ordner, der darin steht.',
+    strg: 'Strg', tasteAnAus: 'Kreuz ein/aus', tasteSpiel: 'im Spiel: nur dort zeigen (nochmal: streichen)',
+    tasteEnde: 'Kreuz beenden', tasteWerkzeuge: 'Stift, Radierer, Linie, Ring, Oval, Füllen, Pipette',
+    tasteSpiegeln: 'Spiegeln umschalten', tasteRueck: 'rückgängig / wiederholen', tasteSpeichern: 'speichern',
+    rechteMaus: 'rechte Maustaste', radieren: 'radieren',
+    // Dateistatus und Meldungen
+    statusAus: 'nicht verbunden', statusVerbunden: n => `${n} · verbunden`,
+    statusGespeichert: (n, d) => `${n} · gespeichert ${d.toLocaleTimeString('de-DE')}`,
+    statusSpeichernFehler: m => 'Speichern ging nicht: ' + m, statusFehler: m => 'Fehler: ' + m,
+    statusNurDownload: 'Dieser Browser speichert nur per Download', statusWarte: n => `${n} · Klick auf „Wieder verbinden“`,
+    fehlerKeinBmp: 'Das ist keine BMP-Datei.', fehlerBmpTiefe: 'Nur BMP mit 24 oder 32 Bit geht.',
+    farbeAufgenommen: c => `Farbe ${c} aufgenommen`, geladenMitRand: n => `${n} geladen – der Rand ist jetzt Teil der Zeichnung`,
+    geladen: n => `${n} geladen`, heruntergeladen: 'Heruntergeladen – nach Dokumente\\Fadenkreuz verschieben',
+    speicherVoll: 'Der Browser-Speicher ist voll – sichere deine Fadenkreuze als Datei',
+    meinesLaden: n => `„${n}“ laden`, meinesLoeschen: n => `„${n}“ löschen`, loeschenFrage: 'löschen?',
+    meinesGeloescht: n => `„${n}“ gelöscht`, meinesGeladen: n => `„${n}“ geladen`, erstZeichnen: 'Erst etwas zeichnen',
+    standardName: i => `Fadenkreuz ${i}`, ueberschrieben: n => `„${n}“ überschrieben`, gemerkt: n => `„${n}“ gemerkt`,
+    nichtsZuSichern: 'Noch nichts zum Sichern', dateitypPresets: 'Fadenkreuze', presetDatei: 'meine-fadenkreuze.json',
+    gesichert: n => `${n} ${n === 1 ? 'Fadenkreuz' : 'Fadenkreuze'} gesichert`,
+    eingelesen: n => `${n} ${n === 1 ? 'Fadenkreuz' : 'Fadenkreuze'} eingelesen`,
+    nichtsNeues: 'Nichts Neues in der Datei', nichtLesbar: 'Die Datei ließ sich nicht lesen', hexFalsch: 'Bitte als #rrggbb eingeben',
+  },
+  en: {
+    titel: 'Fadenkreuz Editor', marke: 'Fadenkreuz Editor', sprache: 'Language',
+    wiederVerbinden: 'Reconnect', oeffnen: 'Open …', oeffnenTitel: 'Load a BMP and connect to it',
+    speichernUnter: 'Save as …', speichernUnterTitel: 'Choose the file to save into',
+    speichern: 'Save', speichernTitel: 'Ctrl+S', liveTitel: 'Write every change to the file right away',
+    werkzeuge: 'Tools', wStift: 'Pencil (B)', wRadierer: 'Eraser (E) – the right mouse button always erases',
+    wLinie: 'Line (L)', wKreis: 'Ring around the starting point (K)', wOval: 'Filled oval around the starting point (O)',
+    wFuellen: 'Fill (F)', wPipette: 'Pick a colour (I)',
+    spiegeln: 'Mirror', aus: 'off', spiegelAus: 'no mirroring (M switches)', spiegelH: 'left ↔ right',
+    spiegelV: 'top ↕ bottom', spiegel4: 'four ways',
+    rueckgaengig: 'Undo (Ctrl+Z)', wiederholen: 'Redo (Ctrl+Y)', leeren: 'Clear all',
+    zeichenfeld: 'Drawing grid', pixelAnzahl: 'pixels', feld: 'Grid', kleiner: 'Smaller grid', groesser: 'Larger grid', bild: 'Image',
+    grund: 'Background', grundFeld: 'Background of the grid', kariert: 'chequered', dunkel: 'dark', hell: 'light', szene: 'scene',
+    farbe: 'Colour', farbeWaehlen: 'Choose a colour', farbeHex: 'Colour as hex value', farbeMuster: c => `Colour ${c}`,
+    deckkraft: 'Opacity', umrandung: 'Outline', randStaerke: 'Outline width', randFarbe: 'Outline colour', weich: 'soft fade-out',
+    meine: 'My crosshairs', meineLeer: 'None of your own yet. Draw one, give it a name and keep it here.',
+    meineName: 'Name, e.g. small oval', meineNameAria: 'Name for your crosshair',
+    merken: 'Keep', merkenTitel: 'Keep the current crosshair as a preset (the same name overwrites)',
+    sichern: 'Back up …', sichernTitel: 'Save all your crosshairs to a file',
+    einlesen: 'Import …', einlesenTitel: 'Read backed-up crosshairs from a file',
+    vorlagen: 'Templates', groesse: 'Size', dicke: 'Thickness', luecke: 'Gap',
+    vorlageKreuz: 'Cross', vorlageKreuzpunkt: 'Cross + dot', vorlagePunkt: 'Dot', vorlageRund: 'Round dot',
+    vorlageT: 'T', vorlageX: 'X', vorlageKreis: 'Ring + dot', vorlageOval: 'White oval',
+    vorlageOvalTitel: 'White oval with a soft black outline',
+    vorschau: 'Preview', zoom: 'Zoom', zoomEcht: 'true size on screen', grundVorschau: 'Background of the preview',
+    ablage: 'Files & keys', liestDatei: 'The crosshair reads this file:', pfad: 'Documents\\Fadenkreuz\\fadenkreuz.bmp',
+    ablageHinweis: 'Use “Save as …” once and save exactly there. From then on the editor remembers the file, and “live” writes every change into it. The crosshair picks it up within a second. If a <code>datenordner.txt</code> lies next to fadenkreuz.exe, the folder named in it applies instead.',
+    strg: 'Ctrl', tasteAnAus: 'crosshair on/off', tasteSpiel: 'in a game: only show it there (again: remove)',
+    tasteEnde: 'quit the crosshair', tasteWerkzeuge: 'pencil, eraser, line, ring, oval, fill, colour picker',
+    tasteSpiegeln: 'switch mirroring', tasteRueck: 'undo / redo', tasteSpeichern: 'save',
+    rechteMaus: 'right mouse button', radieren: 'erase',
+    statusAus: 'not connected', statusVerbunden: n => `${n} · connected`,
+    statusGespeichert: (n, d) => `${n} · saved ${d.toLocaleTimeString('en-GB')}`,
+    statusSpeichernFehler: m => 'Could not save: ' + m, statusFehler: m => 'Error: ' + m,
+    statusNurDownload: 'This browser can only save by downloading', statusWarte: n => `${n} · click “Reconnect”`,
+    fehlerKeinBmp: 'That is not a BMP file.', fehlerBmpTiefe: 'Only 24-bit or 32-bit BMP files work.',
+    farbeAufgenommen: c => `Picked colour ${c}`, geladenMitRand: n => `${n} loaded – the outline is now part of the drawing`,
+    geladen: n => `${n} loaded`, heruntergeladen: 'Downloaded – move it to Documents\\Fadenkreuz',
+    speicherVoll: 'The browser storage is full – back up your crosshairs to a file',
+    meinesLaden: n => `Load “${n}”`, meinesLoeschen: n => `Delete “${n}”`, loeschenFrage: 'delete?',
+    meinesGeloescht: n => `“${n}” deleted`, meinesGeladen: n => `“${n}” loaded`, erstZeichnen: 'Draw something first',
+    standardName: i => `Crosshair ${i}`, ueberschrieben: n => `“${n}” overwritten`, gemerkt: n => `“${n}” kept`,
+    nichtsZuSichern: 'Nothing to back up yet', dateitypPresets: 'Crosshairs', presetDatei: 'my-crosshairs.json',
+    gesichert: n => `${n} ${n === 1 ? 'crosshair' : 'crosshairs'} backed up`,
+    eingelesen: n => `${n} ${n === 1 ? 'crosshair' : 'crosshairs'} imported`,
+    nichtsNeues: 'Nothing new in that file', nichtLesbar: 'That file could not be read', hexFalsch: 'Please enter it as #rrggbb',
+  },
+};
+let sprache = (() => {
+  try { const s = localStorage.getItem('fadenkreuz-sprache'); if (s === 'de' || s === 'en') return s; } catch {}
+  return /^de\b/i.test(navigator.language || '') ? 'de' : 'en';
+})();
+function t(schluessel, ...werte) {
+  const v = TEXTE[sprache][schluessel] ?? TEXTE.de[schluessel] ?? schluessel;
+  return typeof v === 'function' ? v(...werte) : v;
+}
+let letzterStatus = { art: 'aus', schluessel: 'statusAus', werte: [] };
+function uebersetzen() {
+  document.documentElement.lang = sprache;
+  document.title = t('titel');
+  for (const el of $$('[data-t]')) el.textContent = t(el.dataset.t);
+  for (const el of $$('[data-t-html]')) el.innerHTML = t(el.dataset.tHtml);
+  for (const el of $$('[data-t-title]')) el.title = t(el.dataset.tTitle);
+  for (const el of $$('[data-t-aria]')) el.setAttribute('aria-label', t(el.dataset.tAria));
+  for (const el of $$('[data-t-ph]')) el.placeholder = t(el.dataset.tPh);
+  for (const b of $$('#muster button')) b.setAttribute('aria-label', t('farbeMuster', b.dataset.farbe));
+  for (const b of $$('[data-sprache]')) b.setAttribute('aria-pressed', b.dataset.sprache === sprache);
+  dateiStatus(letzterStatus.art, letzterStatus.schluessel, ...letzterStatus.werte);
+}
 
 const z = {
   N: 21, px: new Uint32Array(21 * 21),
@@ -482,8 +608,8 @@ function malenVorschau(b) {
 
 // ---------- Vorlagen ----------
 const VORLAGEN = [
-  ['kreuz', 'Kreuz'], ['kreuzpunkt', 'Kreuz + Punkt'], ['punkt', 'Punkt'], ['rund', 'Punkt rund'],
-  ['t', 'T'], ['x', 'X'], ['kreis', 'Ring + Punkt'], ['oval', 'Oval weiß'],
+  ['kreuz', 'vorlageKreuz'], ['kreuzpunkt', 'vorlageKreuzpunkt'], ['punkt', 'vorlagePunkt'], ['rund', 'vorlageRund'],
+  ['t', 'vorlageT'], ['x', 'vorlageX'], ['kreis', 'vorlageKreis'], ['oval', 'vorlageOval'],
 ];
 const OVAL_STIL = { farbe: '#ffffff', deck: 100, rand: 2, randFarbe: '#000000', randDeck: 90, weich: true };
 
@@ -555,8 +681,8 @@ function kachelnBauen() {
     const k = document.createElement('button');
     k.className = 'kachel' + (art === 'oval' ? ' neu' : '');
     k.dataset.vorlage = art;
-    k.title = art === 'oval' ? 'Weißes Oval mit weichem schwarzem Rand' : name;
-    k.innerHTML = `<canvas width="104" height="104"></canvas><span>${name}</span>`;
+    k.dataset.tTitle = art === 'oval' ? 'vorlageOvalTitel' : name;   // Texte setzt uebersetzen()
+    k.innerHTML = `<canvas width="104" height="104"></canvas><span data-t="${name}"></span>`;
     k.addEventListener('click', () => vorlage(art));
     ziel.append(k);
   }
@@ -647,7 +773,7 @@ raster.addEventListener('pointerdown', ev => {
     const farbe = z.px[p[1] * z.N + p[0]];
     if (farbe) {
       z.farbe = hexVon(farbe); z.deck = Math.max(10, Math.round((farbe >>> 24) / 2.55));
-      melden(`Farbe ${z.farbe} aufgenommen`);
+      melden(t('farbeAufgenommen', z.farbe));
     }
     waehle('stift'); oberflaeche(); merkeZustand(); malen();
     return;
@@ -721,12 +847,12 @@ function alsBmp() {
 
 function ausBmp(buf) {
   const v = new DataView(buf);
-  if (buf.byteLength < 54 || v.getUint8(0) !== 0x42 || v.getUint8(1) !== 0x4d) throw new Error('Das ist keine BMP-Datei.');
+  if (buf.byteLength < 54 || v.getUint8(0) !== 0x42 || v.getUint8(1) !== 0x4d) throw new Error(t('fehlerKeinBmp'));
   const off = v.getUint32(10, true), w = v.getInt32(18, true);
   let h = v.getInt32(22, true);
   const bpp = v.getUint16(28, true), vonOben = h < 0;
   if (vonOben) h = -h;
-  if (bpp !== 24 && bpp !== 32) throw new Error('Nur BMP mit 24 oder 32 Bit geht.');
+  if (bpp !== 24 && bpp !== 32) throw new Error(t('fehlerBmpTiefe'));
   const zeile = Math.floor((w * bpp + 31) / 32) * 4;
   let alpha = false;
   if (bpp === 32) for (let y = 0; y < h && !alpha; y++) for (let x = 0; x < w; x++)
@@ -767,14 +893,16 @@ function idb(modus, arbeit) {
 const griffLaden = () => idb('readonly', s => s.get('ziel'));
 const griffMerken = g => idb('readwrite', s => s.put(g, 'ziel'));
 
-function dateiStatus(art, text) {
+// Merkt sich Schlüssel und Werte statt des fertigen Texts – so übersetzt ein Sprachwechsel auch den Status.
+function dateiStatus(art, schluessel, ...werte) {
+  letzterStatus = { art, schluessel, werte };
   $('#datei').dataset.art = art;
-  $('#datei-text').textContent = text;
+  $('#datei-text').textContent = t(schluessel, ...werte);
 }
 async function verbunden(griff) {
   ziel = griff;
   $('#verbinden').hidden = true;
-  dateiStatus('ok', `${griff.name} · verbunden`);
+  dateiStatus('ok', 'statusVerbunden', griff.name);
   try { await griffMerken(griff); } catch {}
 }
 async function speichern() {
@@ -784,9 +912,9 @@ async function speichern() {
     const w = await ziel.createWritable();
     await w.write(alsBmp());
     await w.close();
-    dateiStatus('ok', `${ziel.name} · gespeichert ${new Date().toLocaleTimeString('de-DE')}`);
+    dateiStatus('ok', 'statusGespeichert', ziel.name, new Date());
   } catch (err) {
-    dateiStatus('fehler', 'Speichern ging nicht: ' + err.message);
+    dateiStatus('fehler', 'statusSpeichernFehler', err.message);
   }
 }
 async function speichernUnter() {
@@ -796,7 +924,7 @@ async function speichernUnter() {
     await verbunden(await showSaveFilePicker(opt));
     await speichern();
   } catch (err) {
-    if (err.name !== 'AbortError') dateiStatus('fehler', 'Fehler: ' + err.message);
+    if (err.name !== 'AbortError') dateiStatus('fehler', 'statusFehler', err.message);
   }
 }
 async function oeffnen() {
@@ -806,7 +934,7 @@ async function oeffnen() {
     const darf = await griff.requestPermission({ mode: 'readwrite' }) === 'granted';   // solange der Klick frisch ist
     if (darf) await verbunden(griff);
     ausBmp(await (await griff.getFile()).arrayBuffer());
-    melden(`${griff.name} geladen – der Rand ist jetzt Teil der Zeichnung`);
+    melden(t('geladenMitRand', griff.name));
   } catch (err) {
     if (err.name !== 'AbortError') melden(err.message, true);
   }
@@ -817,21 +945,21 @@ function herunterladen() {
   a.download = 'fadenkreuz.bmp';
   a.click();
   setTimeout(() => URL.revokeObjectURL(a.href), 2000);
-  melden('Heruntergeladen – nach Dokumente\\Fadenkreuz verschieben');
+  melden(t('heruntergeladen'));
 }
 async function wiederVerbinden() {
   try {
     const griff = await griffLaden();
     if (griff && await griff.requestPermission({ mode: 'readwrite' }) === 'granted') { await verbunden(griff); await speichern(); }
-  } catch (err) { dateiStatus('fehler', err.message); }
+  } catch (err) { dateiStatus('fehler', 'statusFehler', err.message); }
 }
 async function griffBeimStart() {
-  if (!kannDirekt) { dateiStatus('aus', 'Dieser Browser speichert nur per Download'); return; }
+  if (!kannDirekt) { dateiStatus('aus', 'statusNurDownload'); return; }
   try {
     const griff = await griffLaden();
     if (!griff) return;
     if (await griff.queryPermission({ mode: 'readwrite' }) === 'granted') { await verbunden(griff); return; }
-    dateiStatus('warte', `${griff.name} · Klick auf „Wieder verbinden“`);
+    dateiStatus('warte', 'statusWarte', griff.name);
     $('#verbinden').hidden = false;
   } catch {}
 }
@@ -843,7 +971,7 @@ $('#datei-wahl').addEventListener('change', async ev => {
   const f = ev.target.files[0];
   ev.target.value = '';
   if (!f) return;
-  try { ausBmp(await f.arrayBuffer()); melden(`${f.name} geladen`); } catch (err) { melden(err.message, true); }
+  try { ausBmp(await f.arrayBuffer()); melden(t('geladen', f.name)); } catch (err) { melden(err.message, true); }
 });
 $('#verbinden').addEventListener('click', wiederVerbinden);
 
@@ -881,7 +1009,7 @@ function meineLaden() {
 }
 function meineSichern() {
   try { localStorage.setItem(MEINE, JSON.stringify(meine)); return true; }
-  catch { melden('Der Browser-Speicher ist voll – sichere deine Fadenkreuze als Datei', true); return false; }
+  catch { melden(t('speicherVoll'), true); return false; }
 }
 function meineZeigen() {
   const liste = $('#meine');
@@ -892,7 +1020,7 @@ function meineZeigen() {
     huelle.className = 'huelle';
     const k = document.createElement('button');
     k.className = 'kachel';
-    k.title = `„${e.name}“ laden`;
+    k.title = t('meinesLaden', e.name);
     const cv = document.createElement('canvas');
     cv.width = cv.height = 104;
     const name = document.createElement('span');
@@ -902,12 +1030,12 @@ function meineZeigen() {
     const weg = document.createElement('button');
     weg.className = 'weg';
     weg.textContent = '×';
-    weg.title = weg.ariaLabel = `„${e.name}“ löschen`;
+    weg.title = weg.ariaLabel = t('meinesLoeschen', e.name);
     let frist = 0;
     weg.addEventListener('click', () => {
       if (!weg.classList.contains('sicher')) {   // erster Klick fragt nur nach
         weg.classList.add('sicher');
-        weg.textContent = 'löschen?';
+        weg.textContent = t('loeschenFrage');
         frist = setTimeout(() => { weg.classList.remove('sicher'); weg.textContent = '×'; }, 3000);
         return;
       }
@@ -915,7 +1043,7 @@ function meineZeigen() {
       meine = meine.filter(x => x !== e);
       meineSichern();
       meineZeigen();
-      melden(`„${e.name}“ gelöscht`);
+      melden(t('meinesGeloescht', e.name));
     });
     huelle.append(k, weg);
     liste.append(huelle);
@@ -929,37 +1057,37 @@ function meinesNehmen(e) {
   oberflaeche();
   kachelnSpaeter();
   geaendert();
-  melden(`„${e.name}“ geladen`);
+  melden(t('meinesGeladen', e.name));
 }
 function meinesMerken() {
-  if (!z.px.some(Boolean)) { melden('Erst etwas zeichnen', true); return; }
-  const name = $('#meine-name').value.trim() || `Fadenkreuz ${meine.length + 1}`;
+  if (!z.px.some(Boolean)) { melden(t('erstZeichnen'), true); return; }
+  const name = $('#meine-name').value.trim() || t('standardName', meine.length + 1);
   const eintrag = sauber({ name, N: z.N, px: zuText(z.px), rand: z.rand, randFarbe: z.randFarbe, randDeck: z.randDeck, weich: z.weich });
   const i = meine.findIndex(x => x.name.toLowerCase() === eintrag.name.toLowerCase());
   if (i >= 0) meine[i] = eintrag; else meine.push(eintrag);
   if (!meineSichern()) return;
   $('#meine-name').value = '';
   meineZeigen();
-  melden(i >= 0 ? `„${eintrag.name}“ überschrieben` : `„${eintrag.name}“ gemerkt`);
+  melden(t(i >= 0 ? 'ueberschrieben' : 'gemerkt', eintrag.name));
 }
 async function meineExport() {
-  if (!meine.length) { melden('Noch nichts zum Sichern', true); return; }
+  if (!meine.length) { melden(t('nichtsZuSichern'), true); return; }
   const blob = new Blob([JSON.stringify({ art: 'fadenkreuz-presets', version: 1, fadenkreuze: meine }, null, 1)], { type: 'application/json' });
   try {
     if (window.showSaveFilePicker) {
-      const griff = await showSaveFilePicker({ suggestedName: 'meine-fadenkreuze.json', startIn: 'documents',
-        types: [{ description: 'Fadenkreuze', accept: { 'application/json': ['.json'] } }] });
+      const griff = await showSaveFilePicker({ suggestedName: t('presetDatei'), startIn: 'documents',
+        types: [{ description: t('dateitypPresets'), accept: { 'application/json': ['.json'] } }] });
       const w = await griff.createWritable();
       await w.write(blob);
       await w.close();
     } else {
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
-      a.download = 'meine-fadenkreuze.json';
+      a.download = t('presetDatei');
       a.click();
       setTimeout(() => URL.revokeObjectURL(a.href), 2000);
     }
-    melden(`${meine.length} ${meine.length === 1 ? 'Fadenkreuz' : 'Fadenkreuze'} gesichert`);
+    melden(t('gesichert', meine.length));
   } catch (err) {
     if (err.name !== 'AbortError') melden(err.message, true);
   }
@@ -977,10 +1105,10 @@ async function meineImport(datei) {
     }
     if (meineSichern()) {
       meineZeigen();
-      melden(neu ? `${neu} ${neu === 1 ? 'Fadenkreuz' : 'Fadenkreuze'} eingelesen` : 'Nichts Neues in der Datei');
+      melden(neu ? t('eingelesen', neu) : t('nichtsNeues'));
     }
   } catch {
-    melden('Die Datei ließ sich nicht lesen', true);
+    melden(t('nichtLesbar'), true);
   }
 }
 $('#meine-speichern').addEventListener('click', meinesMerken);
@@ -1053,7 +1181,7 @@ function einstellungGeaendert(betrifftBild) {
 const MUSTER = ['#33ff88', '#00e5ff', '#ff3355', '#ffe14d', '#ff4dff', '#ff9a3c', '#ffffff', '#000000'];
 for (const m of MUSTER) {
   const b = document.createElement('button');
-  b.style.setProperty('--c', m); b.dataset.farbe = m; b.title = m; b.setAttribute('aria-label', 'Farbe ' + m);
+  b.style.setProperty('--c', m); b.dataset.farbe = m; b.title = m;   // aria-label setzt uebersetzen()
   b.addEventListener('click', () => { z.farbe = m; einstellungGeaendert(false); });
   $('#muster').append(b);
 }
@@ -1092,7 +1220,7 @@ $('#rand-farbe').addEventListener('input', ev => { z.randFarbe = ev.target.value
 $('#farbe-hex').addEventListener('change', ev => {
   const v = ev.target.value.trim().replace(/^#?/, '#').toLowerCase();
   if (/^#[0-9a-f]{6}$/.test(v)) { z.farbe = v; einstellungGeaendert(false); }
-  else { ev.target.value = z.farbe; melden('Bitte als #rrggbb eingeben', true); }
+  else { ev.target.value = z.farbe; melden(t('hexFalsch'), true); }
 });
 $('#weich').addEventListener('change', ev => { z.weich = ev.target.checked; einstellungGeaendert(true); });
 $('#live').addEventListener('change', ev => { z.live = ev.target.checked; merkeZustand(); if (z.live && ziel) speichern(); });
@@ -1132,6 +1260,13 @@ knoepfe();
 kachelnMalen();
 meineLaden();
 meineZeigen();
+uebersetzen();
+for (const b of $$('[data-sprache]')) b.addEventListener('click', () => {
+  sprache = b.dataset.sprache;
+  try { localStorage.setItem('fadenkreuz-sprache', sprache); } catch {}
+  uebersetzen();
+  meineZeigen();   // Tooltips der eigenen Kacheln
+});
 new ResizeObserver(feldGroesse).observe($('#feld'));
 new ResizeObserver(() => malen()).observe(vorschau);
 griffBeimStart();

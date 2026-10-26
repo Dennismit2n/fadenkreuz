@@ -2,11 +2,11 @@
 
 **Your own crosshair in the exact centre of the screen – drawn by you, running on about 1 MB of RAM.** A tiny Windows overlay that sits on top of your game, lets every click pass through, and shows whatever you drew in its editor. Neon green on black by default.
 
-![Windows](https://img.shields.io/badge/Windows-10%20%7C%2011-33ff88) ![RAM](https://img.shields.io/badge/RAM-about%201%20MB-0b0d0c) ![Language](https://img.shields.io/badge/Language-German-33ff88) ![License](https://img.shields.io/badge/License-MIT-0b0d0c)
+![Windows](https://img.shields.io/badge/Windows-10%20%7C%2011-33ff88) ![RAM](https://img.shields.io/badge/RAM-about%201%20MB-0b0d0c) ![Language](https://img.shields.io/badge/Language-English%20%7C%20German-33ff88) ![License](https://img.shields.io/badge/License-MIT-0b0d0c)
 
-[Deutsche Fassung](README.de.md) — the app itself speaks German.
+[Deutsche Fassung](README.de.md) — the editor and the setup speak English and German.
 
-![The editor: a green cross with a thin black outline on a chequered grid, own presets and templates on the right, a 4× preview against a game-like scene](docs/editor.webp)
+![The editor: a green cross with a thin black outline on a chequered grid, your own crosshairs and templates on the right, a preview against a game-like scene](docs/editor-en.webp)
 
 ---
 
@@ -27,10 +27,10 @@ In the installer you choose both or just one of them. They do not depend on each
 
 ## Getting started
 
-1. Download **`Fadenkreuz-Setup-1.0.0.exe`** from the [releases](../../releases/latest). Windows will say "unknown publisher" – the setup is not signed, because that costs money. Continue via **More info → Run anyway**.
+1. Download **`Fadenkreuz-Setup-1.1.0.exe`** from the [releases](../../releases/latest). Windows will say "unknown publisher" – the setup is not signed, because that costs money. Continue via **More info → Run anyway**.
 2. Choose **Install for me only** (no admin rights needed) or **Install for all users**, then the parts you want.
 3. Start **Fadenkreuz**: a green cross appears in the middle of the screen.
-4. Open **Fadenkreuz-Editor**, draw, click **Speichern unter …** (*Save as*) once and save as `fadenkreuz.bmp` in `Documents\Fadenkreuz`. The editor remembers the file; with **live** switched on, every stroke shows up on screen within a second.
+4. Open **Fadenkreuz-Editor**, draw, click **Save as …** once and save as `fadenkreuz.bmp` in `Documents\Fadenkreuz`. The editor remembers the file; with **live** switched on, every stroke shows up on screen within a second.
 
 ## Keys
 
@@ -42,12 +42,12 @@ In the installer you choose both or just one of them. They do not depend on each
 
 ## The editor
 
-![The template "Oval weiß": a white oval with smoothed edges and a soft black outline on a scene background](docs/oval.webp)
+![The template “White oval”: a white oval with smoothed edges and a soft black outline on a scene background (screenshot with the German interface)](docs/oval.webp)
 
 - **Tools:** pencil, eraser, line, ring, filled oval, fill and colour picker; the right mouse button always erases.
 - **Mirroring** left/right, top/bottom or four ways – a symmetrical crosshair in a few strokes.
 - **Outline** 0 to 4 pixels in any colour and opacity, optionally fading out softly.
-- **Templates:** cross, cross + dot, dot, round dot, T, X, ring + dot and **Oval weiß** – a white oval with smoothed edges and a soft black outline. Size, thickness and gap are adjustable.
+- **Templates:** cross, cross + dot, dot, round dot, T, X, ring + dot and **White oval** – a white oval with smoothed edges and a soft black outline. Size, thickness and gap are adjustable.
 - **My crosshairs:** save your own designs under a name, load them with one click, and back them all up to a file (or read them back in, e.g. on another PC).
 - **Preview** at true size (1:1), 2× or 4× against a game-like scene, dark or light.
 - Undo and redo, adjustable field size, a pixel-exact grid that marks the centre.
@@ -69,7 +69,7 @@ Windows only allows that (it is called *UIAccess*, the same as for the on-screen
 - **Main screen only.**
 - **Exclusive fullscreen** games draw over every overlay. Switch the game to *borderless* or *windowed fullscreen*.
 - **Anti-cheat:** Fadenkreuz does not touch the game – it is a separate window. Still, a few competitive games dislike overlays; check before playing ranked.
-- The interface of the editor and the setup texts are German (the setup also speaks English).
+- Editor and setup speak English and German. The editor follows your browser’s language and has a DE/EN switch in its top bar.
 
 ## Image format
 
@@ -89,7 +89,7 @@ You need Visual Studio or the Build Tools with the C++ workload, and [Inno Setup
 bauen.bat
 ```
 
-That produces `build\fadenkreuz.exe`, `build\fadenkreuz-oben.exe` (the UIAccess variant) and `build\Fadenkreuz-Setup-1.0.0.exe`. The icons are drawn by `tools\icons.py` (Python with Pillow).
+That produces `build\fadenkreuz.exe`, `build\fadenkreuz-oben.exe` (the UIAccess variant) and `build\Fadenkreuz-Setup-1.1.0.exe`. The version lives in `bauen.bat` and `src\fadenkreuz.rc`. The icons are drawn by `tools\icons.py` (Python with Pillow).
 
 | Folder | Contents |
 |---|---|

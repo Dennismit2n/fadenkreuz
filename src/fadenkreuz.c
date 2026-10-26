@@ -314,7 +314,9 @@ static void liste_umschalten(void)
     enum { PLATZ = LISTE_MAX * 2 };   // jeder Name bekommt \r\n statt einer 0: höchstens doppelt so lang
     static WCHAR text[PLATZ];
     lstrcpyW(text, L"# Fadenkreuz nur zeigen, wenn eines dieser Programme vorne ist (eine exe pro Zeile).\r\n"
-                   L"# Leer = immer zeigen. Strg+Alt+F10 im Programm nimmt es auf oder streicht es.\r\n");
+                   L"# Leer = immer zeigen. Strg+Alt+F10 im Programm nimmt es auf oder streicht es.\r\n"
+                   L"# Only show the crosshair while one of these programs is in front (one exe per line).\r\n"
+                   L"# Empty = always show. Ctrl+Alt+F10 inside a program adds or removes it.\r\n");
     int laenge = lstrlenW(text);
     for (const WCHAR *p = g_liste; *p; p += lstrlenW(p) + 1) {
         int l = lstrlenW(p);

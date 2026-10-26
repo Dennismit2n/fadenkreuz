@@ -6,7 +6,7 @@ rem   build\Fadenkreuz-Setup-<Version>.exe, falls Inno Setup 6 installiert ist
 rem Voraussetzung: Visual Studio oder die Build Tools mit den C++-Werkzeugen.
 rem Icons neu zeichnen (braucht Python mit Pillow): python tools\icons.py
 setlocal
-set VERSION=1.0.0
+set VERSION=1.1.0
 set "VSWHERE=%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe"
 if not exist "%VSWHERE%" echo Visual Studio oder die Build Tools fehlen.& exit /b 1
 for /f "usebackq delims=" %%i in (`"%VSWHERE%" -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath`) do set "VS=%%i"
