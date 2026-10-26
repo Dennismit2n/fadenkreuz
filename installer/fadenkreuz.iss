@@ -109,16 +109,17 @@ Name: "{autoprograms}\Fadenkreuz-Editor"; Filename: "{app}\Editor\editor.html"; 
 Name: "{autodesktop}\Fadenkreuz-Editor"; Filename: "{app}\Editor\editor.html"; IconFilename: "{app}\Editor\editor.ico"; Comment: "{cm:KommentarEditor}"; Components: editor; Tasks: desktop; Check: not EdgeDa
 
 [Run]
-Filename: "powershell.exe"; Parameters: "-NoProfile -ExecutionPolicy Bypass -File ""{app}\ueber-allem.ps1"" -Ordner ""{app}"""; StatusMsg: "{cm:StatusSignieren}"; Components: kreuz; Tasks: oben; Flags: runhidden waituntilterminated
+Filename: "{sys}\WindowsPowerShell\v1.0\powershell.exe"; Parameters: "-NoProfile -ExecutionPolicy Bypass -File ""{app}\ueber-allem.ps1"" -Ordner ""{app}"""; StatusMsg: "{cm:StatusSignieren}"; Components: kreuz; Tasks: oben; Flags: runhidden waituntilterminated
 ; shellexec: Die UIAccess-Fassung darf nur über die Shell gestartet werden (CreateProcess liefert Fehler 740).
 Filename: "{app}\fadenkreuz.exe"; Description: "{cm:StartKreuz}"; Components: kreuz; Flags: nowait postinstall skipifsilent shellexec
 Filename: "{code:EdgePfad}"; Parameters: "--app=""{code:EditorUrl}"""; Description: "{cm:StartEditor}"; Components: editor; Check: EdgeDa; Flags: nowait postinstall skipifsilent unchecked
 
 [UninstallRun]
-Filename: "powershell.exe"; Parameters: "-NoProfile -ExecutionPolicy Bypass -File ""{app}\ueber-allem.ps1"" -Ordner ""{app}"" -Entfernen"; Components: kreuz; Tasks: oben; Flags: runhidden waituntilterminated; RunOnceId: "ZertifikatEntfernen"
+Filename: "{sys}\WindowsPowerShell\v1.0\powershell.exe"; Parameters: "-NoProfile -ExecutionPolicy Bypass -File ""{app}\ueber-allem.ps1"" -Ordner ""{app}"" -Entfernen"; Components: kreuz; Tasks: oben; Flags: runhidden waituntilterminated; RunOnceId: "ZertifikatEntfernen"
 
 [UninstallDelete]
 Type: files; Name: "{app}\fadenkreuz-oben.exe"
+Type: files; Name: "{app}\ueber-allem.log"
 
 [Code]
 const
