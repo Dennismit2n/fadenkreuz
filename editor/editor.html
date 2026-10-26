@@ -1,0 +1,1140 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Fadenkreuz-Editor</title>
+<link rel="icon" href="editor-symbol.png">
+<style>
+:root {
+  --bg: #101216; --flaeche: #15181d; --karte: #1a1e24; --feld: #21252d; --feld-hover: #282d36;
+  --linie: #282d35; --linie-stark: #363c47;
+  --text: #aeb3bb; --hell: #c9ced5; --leise: #737a84;
+  --akzent: #5fae8b; --akzent-weich: rgba(95, 174, 139, .13); --akzent-text: #bfe0d0;
+  --warn: #c9a15a; --fehler: #c96b6b;
+  --r: 8px;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { height: 100%; }
+body {
+  margin: 0; display: grid; grid-template-rows: auto minmax(0, 1fr); overflow: hidden;
+  background: var(--bg); color: var(--text);
+  font: 13.5px/1.45 "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
+}
+button, input, select { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--akzent); outline-offset: 1px; }
+
+/* ---------- Kopfleiste ---------- */
+.kopf {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px;
+  padding: 9px 16px; background: var(--flaeche); border-bottom: 1px solid var(--linie);
+}
+.marke { display: flex; align-items: center; gap: 9px; font-weight: 600; color: var(--hell); font-size: 14.5px; margin-right: auto; }
+.marke img { width: 22px; height: 22px; }
+.chip {
+  display: inline-flex; align-items: center; gap: 7px; max-width: 420px;
+  padding: 4px 10px; border-radius: 999px; background: var(--karte); border: 1px solid var(--linie);
+  color: var(--leise); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.chip .lampe { width: 8px; height: 8px; border-radius: 50%; background: var(--leise); flex: none; }
+.chip[data-art="ok"] .lampe { background: var(--akzent); box-shadow: 0 0 6px rgba(95, 174, 139, .6); }
+.chip[data-art="ok"] { color: var(--text); }
+.chip[data-art="warte"] .lampe { background: var(--warn); }
+.chip[data-art="fehler"] .lampe { background: var(--fehler); }
+.chip[data-art="fehler"] { color: #dba3a3; }
+
+/* ---------- Knöpfe ---------- */
+.knopf {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  height: 32px; padding: 0 11px; border-radius: 7px; cursor: pointer;
+  background: var(--feld); border: 1px solid var(--linie); color: var(--text);
+  transition: background .12s, border-color .12s, color .12s;
+}
+.knopf:hover { background: var(--feld-hover); border-color: var(--linie-stark); }
+.knopf.primaer { background: #24463a; border-color: #2f5e4c; color: var(--akzent-text); }
+.knopf.primaer:hover { background: #2a5243; }
+.knopf[aria-pressed="true"] { background: var(--akzent-weich); border-color: var(--akzent); color: var(--akzent-text); }
+.knopf.ikon { width: 34px; padding: 0; }
+.knopf svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.knopf:disabled { opacity: .4; cursor: default; }
+.segment { display: inline-flex; border: 1px solid var(--linie); border-radius: 8px; overflow: hidden; background: var(--feld); }
+.segment .knopf { border: 0; border-radius: 0; height: 30px; background: transparent; }
+.segment .knopf + .knopf { border-left: 1px solid var(--linie); }
+.segment .knopf[aria-pressed="true"] { background: var(--akzent-weich); }
+.schalter { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; color: var(--text); }
+.schalter input { position: absolute; opacity: 0; pointer-events: none; }
+.schalter .bahn { width: 32px; height: 18px; border-radius: 9px; background: var(--feld); border: 1px solid var(--linie-stark); position: relative; transition: background .15s; }
+.schalter .bahn::after { content: ""; position: absolute; top: 2px; left: 2px; width: 12px; height: 12px; border-radius: 50%; background: var(--leise); transition: transform .15s, background .15s; }
+.schalter input:checked + .bahn { background: #24463a; border-color: #2f5e4c; }
+.schalter input:checked + .bahn::after { transform: translateX(14px); background: var(--akzent); }
+.schalter input:focus-visible + .bahn { outline: 2px solid var(--akzent); outline-offset: 1px; }
+
+/* ---------- Arbeitsfläche ---------- */
+.arbeit { display: grid; grid-template-columns: minmax(0, 1fr) 344px; min-height: 0; }
+.buehne { display: flex; flex-direction: column; gap: 10px; min-height: 0; padding: 12px 16px; }
+.leiste { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
+.gruppe { display: inline-flex; align-items: center; gap: 4px; }
+.gruppe-titel { color: var(--leise); font-size: 12px; margin-right: 4px; }
+.feld { flex: 1; min-height: 0; display: grid; place-items: center; }
+#raster { display: block; touch-action: none; cursor: crosshair; border-radius: 6px; box-shadow: 0 0 0 1px var(--linie), 0 10px 30px rgba(0, 0, 0, .35); }
+.fuss { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; color: var(--leise); font-size: 12.5px; min-height: 32px; }
+.fuss b { color: var(--text); font-weight: 600; font-variant-numeric: tabular-nums; }
+.fuss .rechts { margin-left: auto; display: inline-flex; align-items: center; gap: 8px; }
+#meldung { color: var(--text); }
+#meldung[data-art="fehler"] { color: #dba3a3; }
+.stepper { display: inline-flex; align-items: center; gap: 2px; }
+.stepper .knopf { width: 24px; height: 24px; padding: 0; border-radius: 6px; }
+
+/* ---------- Seitenleiste ---------- */
+.panel { overflow-y: auto; background: var(--flaeche); border-left: 1px solid var(--linie); padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+.karte { background: var(--karte); border: 1px solid var(--linie); border-radius: var(--r); padding: 12px; }
+.karte > h2, .karte > summary {
+  margin: 0 0 10px; font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--leise);
+}
+details.karte > summary { cursor: pointer; margin: 0; list-style: none; display: flex; justify-content: space-between; }
+details.karte > summary::after { content: "▾"; }
+details.karte[open] > summary { margin-bottom: 10px; }
+details.karte[open] > summary::after { content: "▴"; }
+.zeile { display: flex; align-items: center; gap: 8px; margin: 8px 0 0; }
+.zeile:first-of-type { margin-top: 0; }
+.regler { display: grid; grid-template-columns: 70px minmax(0, 1fr) 40px; align-items: center; gap: 10px; margin-top: 8px; }
+.regler > span { color: var(--leise); }
+.regler output { text-align: right; font-variant-numeric: tabular-nums; color: var(--text); }
+input[type=range] { width: 100%; accent-color: var(--akzent); margin: 0; }
+.farbwahl { position: relative; width: 40px; height: 40px; flex: none; border-radius: 9px; overflow: hidden; border: 1px solid var(--linie-stark); forced-color-adjust: none; cursor: pointer; }
+.farbwahl.klein { width: 30px; height: 30px; border-radius: 7px; }
+.farbwahl input { position: absolute; inset: -8px; width: calc(100% + 16px); height: calc(100% + 16px); border: 0; padding: 0; cursor: pointer; opacity: 0; }
+.farbwahl i { position: absolute; inset: 0; background: var(--c); }
+.hex { width: 86px; height: 32px; padding: 0 8px; border-radius: 7px; background: var(--feld); border: 1px solid var(--linie); font-family: Consolas, "Cascadia Mono", monospace; text-transform: lowercase; }
+.muster { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.muster button {
+  width: 24px; height: 24px; border-radius: 6px; padding: 0; cursor: pointer; forced-color-adjust: none;
+  background: var(--c); border: 1px solid rgba(255, 255, 255, .14); box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .35);
+}
+.muster button[aria-pressed="true"] { outline: 2px solid var(--hell); outline-offset: 2px; }
+.vorlagen { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+.kachel {
+  display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 2px 5px; cursor: pointer;
+  background: var(--feld); border: 1px solid var(--linie); border-radius: 8px; color: var(--leise); font-size: 11px; line-height: 1.2; text-align: center;
+}
+.kachel:hover { border-color: var(--linie-stark); color: var(--text); background: var(--feld-hover); }
+.kachel canvas { width: 52px; height: 52px; border-radius: 5px; image-rendering: pixelated; }
+.kachel.neu { border-color: #3d4a44; }
+.huelle { position: relative; display: grid; }
+.huelle .weg {
+  position: absolute; top: 3px; right: 3px; min-width: 20px; height: 20px; padding: 0 5px; border-radius: 5px; cursor: pointer;
+  background: rgba(10, 12, 15, .82); border: 1px solid var(--linie-stark); color: var(--text); font-size: 12px; line-height: 1;
+  opacity: 0; transition: opacity .12s;
+}
+.huelle:hover .weg, .huelle:focus-within .weg, .weg.sicher { opacity: 1; }
+.weg.sicher { background: #5a2a2a; border-color: var(--fehler); color: #f0caca; }
+.name { flex: 1; min-width: 0; height: 32px; padding: 0 9px; border-radius: 7px; background: var(--feld); border: 1px solid var(--linie); }
+.name::placeholder { color: var(--leise); }
+.hinweis code { font: 12px Consolas, "Cascadia Mono", monospace; }
+#vorschau { display: block; width: 100%; height: 180px; border-radius: 6px; border: 1px solid var(--linie); }
+.leise { color: var(--leise); }
+.hinweis { color: var(--leise); font-size: 12.5px; margin: 8px 0 0; }
+.pfad { display: flex; gap: 6px; align-items: stretch; margin-top: 6px; }
+.pfad code { flex: 1; min-width: 0; padding: 6px 8px; border-radius: 6px; background: var(--feld); border: 1px solid var(--linie); font: 12px/1.35 Consolas, "Cascadia Mono", monospace; color: var(--text); overflow-wrap: anywhere; }
+.tasten { display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; font-size: 12.5px; }
+.tasten span:nth-child(odd) { white-space: nowrap; }
+kbd { display: inline-block; min-width: 18px; padding: 0 5px; border-radius: 4px; background: var(--feld); border: 1px solid var(--linie-stark); border-bottom-width: 2px; font: 11.5px/1.5 inherit; text-align: center; color: var(--text); }
+
+@media (max-width: 880px) {
+  body { overflow: auto; height: auto; display: block; }
+  .arbeit { grid-template-columns: 1fr; }
+  .feld { min-height: min(92vw, 640px); }
+  .panel { border-left: 0; border-top: 1px solid var(--linie); }
+}
+</style>
+</head>
+<body>
+<header class="kopf">
+  <div class="marke"><img src="editor-symbol.png" alt="">Fadenkreuz-Editor</div>
+  <span class="chip" id="datei" data-art="aus" role="status"><i class="lampe"></i><span id="datei-text">nicht verbunden</span></span>
+  <button class="knopf" id="verbinden" hidden>Wieder verbinden</button>
+  <button class="knopf" id="oeffnen" title="BMP laden und damit verbinden">Öffnen …</button>
+  <input type="file" id="datei-wahl" accept=".bmp,image/bmp" hidden>
+  <button class="knopf" id="speichern-unter" title="Datei wählen, in die gespeichert wird">Speichern unter …</button>
+  <button class="knopf primaer" id="speichern" title="Strg+S">Speichern</button>
+  <label class="schalter" title="Jede Änderung sofort in die Datei schreiben"><input type="checkbox" id="live"><span class="bahn"></span>live</label>
+</header>
+
+<main class="arbeit">
+  <section class="buehne">
+    <div class="leiste">
+      <div class="gruppe" role="toolbar" aria-label="Werkzeuge">
+        <button class="knopf ikon" data-werkzeug="stift" title="Stift (B)"><svg viewBox="0 0 24 24"><path d="M4 20l1-4.5L15.5 5a2.1 2.1 0 0 1 3 3L8 18.5 4 20z"/><path d="M13.5 7l3 3"/></svg></button>
+        <button class="knopf ikon" data-werkzeug="radierer" title="Radierer (E) – rechte Maustaste radiert immer"><svg viewBox="0 0 24 24"><path d="M9 20h11"/><path d="M5.6 14.4l7.2-7.2a2 2 0 0 1 2.8 0l2.2 2.2a2 2 0 0 1 0 2.8L12 20H9l-3.4-3.4a1.6 1.6 0 0 1 0-2.2z"/><path d="M9.5 10.5l5 5"/></svg></button>
+        <button class="knopf ikon" data-werkzeug="linie" title="Linie (L)"><svg viewBox="0 0 24 24"><path d="M6 18L18 6"/><circle cx="6" cy="18" r="1.6"/><circle cx="18" cy="6" r="1.6"/></svg></button>
+        <button class="knopf ikon" data-werkzeug="kreis" title="Ring um den Startpunkt (K)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.5"/></svg></button>
+        <button class="knopf ikon" data-werkzeug="oval" title="Gefülltes Oval um den Startpunkt (O)"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="8.5" ry="4.8" fill="currentColor" fill-opacity=".3"/></svg></button>
+        <button class="knopf ikon" data-werkzeug="fuellen" title="Füllen (F)"><svg viewBox="0 0 24 24"><path d="M5 12.5l6.5-6.5 6.5 6.5-6.5 6.5z"/><path d="M5 12.5h13"/><path d="M20 15.5s1.6 1.9 1.6 3a1.6 1.6 0 0 1-3.2 0c0-1.1 1.6-3 1.6-3z"/></svg></button>
+        <button class="knopf ikon" data-werkzeug="pipette" title="Farbe aufnehmen (I)"><svg viewBox="0 0 24 24"><path d="M14.5 4.5l5 5"/><path d="M17 7l-9 9-3.5 1.5L6 14l9-9"/><path d="M13 6l5 5"/></svg></button>
+      </div>
+      <div class="gruppe">
+        <span class="gruppe-titel">Spiegeln</span>
+        <div class="segment" role="group" aria-label="Spiegeln">
+          <button class="knopf" data-setze="spiegel" data-v="aus" title="nicht spiegeln (M wechselt)">aus</button>
+          <button class="knopf" data-setze="spiegel" data-v="h" title="links ↔ rechts">⇆</button>
+          <button class="knopf" data-setze="spiegel" data-v="v" title="oben ↕ unten">⇅</button>
+          <button class="knopf" data-setze="spiegel" data-v="4" title="4-fach">✛</button>
+        </div>
+      </div>
+      <div class="gruppe">
+        <button class="knopf ikon" id="rueck" title="Rückgängig (Strg+Z)"><svg viewBox="0 0 24 24"><path d="M9 5L5 9l4 4"/><path d="M5 9h9.5a4.5 4.5 0 0 1 0 9H9"/></svg></button>
+        <button class="knopf ikon" id="vor" title="Wiederholen (Strg+Y)"><svg viewBox="0 0 24 24"><path d="M15 5l4 4-4 4"/><path d="M19 9H9.5a4.5 4.5 0 0 0 0 9H15"/></svg></button>
+        <button class="knopf ikon" id="leeren" title="Alles leeren"><svg viewBox="0 0 24 24"><path d="M5 7h14"/><path d="M10 7V5h4v2"/><path d="M7 7l1 12h8l1-12"/></svg></button>
+      </div>
+    </div>
+
+    <div class="feld" id="feld"><canvas id="raster" aria-label="Zeichenfeld"></canvas></div>
+
+    <div class="fuss">
+      <span id="pos">Pixel –</span>
+      <span class="stepper">Feld
+        <button class="knopf" id="kleiner" title="Feld verkleinern">−</button>
+        <b id="groesse">21 × 21</b>
+        <button class="knopf" id="groesser" title="Feld vergrößern">+</button>
+      </span>
+      <span>Bild <b id="bildmass">–</b></span>
+      <span><b id="anzahl">0</b> Pixel</span>
+      <span id="meldung" role="status"></span>
+      <span class="rechts">Grund
+        <span class="segment" role="group" aria-label="Hintergrund des Felds">
+          <button class="knopf" data-setze="feldGrund" data-v="kariert">kariert</button>
+          <button class="knopf" data-setze="feldGrund" data-v="dunkel">dunkel</button>
+          <button class="knopf" data-setze="feldGrund" data-v="hell">hell</button>
+          <button class="knopf" data-setze="feldGrund" data-v="szene">Szene</button>
+        </span>
+      </span>
+    </div>
+  </section>
+
+  <aside class="panel">
+    <section class="karte">
+      <h2>Farbe</h2>
+      <div class="zeile">
+        <label class="farbwahl" title="Farbe wählen"><i id="farbe-chip"></i><input type="color" id="farbe" aria-label="Farbe"></label>
+        <input class="hex" id="farbe-hex" spellcheck="false" aria-label="Farbe als Hex-Wert">
+      </div>
+      <div class="muster" id="muster"></div>
+      <div class="regler"><span>Deckkraft</span><input type="range" min="10" max="100" data-wert="deck"><output data-zeigt="deck" data-einheit="%"></output></div>
+    </section>
+
+    <section class="karte">
+      <h2>Umrandung</h2>
+      <div class="zeile">
+        <span class="segment" role="group" aria-label="Randstärke">
+          <button class="knopf" data-setze="rand" data-v="0">aus</button>
+          <button class="knopf" data-setze="rand" data-v="1">1</button>
+          <button class="knopf" data-setze="rand" data-v="2">2</button>
+          <button class="knopf" data-setze="rand" data-v="3">3</button>
+          <button class="knopf" data-setze="rand" data-v="4">4</button>
+        </span>
+        <label class="farbwahl klein" title="Randfarbe"><i id="rand-chip"></i><input type="color" id="rand-farbe" aria-label="Randfarbe"></label>
+      </div>
+      <div class="regler"><span>Deckkraft</span><input type="range" min="10" max="100" data-wert="randDeck"><output data-zeigt="randDeck" data-einheit="%"></output></div>
+      <div class="zeile"><label class="schalter"><input type="checkbox" id="weich"><span class="bahn"></span>weich auslaufen</label></div>
+    </section>
+
+    <section class="karte">
+      <h2>Meine Fadenkreuze</h2>
+      <div class="vorlagen" id="meine"></div>
+      <p class="hinweis" id="meine-leer" style="margin-top: 0">Noch keine eigenen. Zeichne eins, gib ihm einen Namen und merk es dir hier.</p>
+      <div class="zeile">
+        <input class="name" id="meine-name" placeholder="Name, z. B. Oval klein" maxlength="24" spellcheck="false" aria-label="Name für dein Fadenkreuz">
+        <button class="knopf primaer" id="meine-speichern" title="Aktuelles Fadenkreuz als Preset merken (gleicher Name überschreibt)">Merken</button>
+      </div>
+      <div class="zeile">
+        <button class="knopf" id="meine-export" title="Alle eigenen Fadenkreuze als Datei sichern">Sichern …</button>
+        <button class="knopf" id="meine-import" title="Gesicherte Fadenkreuze aus einer Datei einlesen">Einlesen …</button>
+        <input type="file" id="meine-datei" accept=".json,application/json" hidden>
+      </div>
+    </section>
+
+    <section class="karte">
+      <h2>Vorlagen</h2>
+      <div class="vorlagen" id="vorlagen"></div>
+      <div class="regler"><span>Größe</span><input type="range" min="1" max="20" data-wert="arm"><output data-zeigt="arm"></output></div>
+      <div class="regler"><span>Dicke</span><input type="range" min="1" max="7" step="2" data-wert="dicke"><output data-zeigt="dicke"></output></div>
+      <div class="regler"><span>Lücke</span><input type="range" min="0" max="10" data-wert="luecke"><output data-zeigt="luecke"></output></div>
+    </section>
+
+    <section class="karte">
+      <h2>Vorschau</h2>
+      <canvas id="vorschau"></canvas>
+      <div class="zeile" style="justify-content: space-between">
+        <span class="segment" role="group" aria-label="Vergrößerung">
+          <button class="knopf" data-setze="zoom" data-v="1" title="echte Größe am Bildschirm">1:1</button>
+          <button class="knopf" data-setze="zoom" data-v="2">2×</button>
+          <button class="knopf" data-setze="zoom" data-v="4">4×</button>
+        </span>
+        <span class="segment" role="group" aria-label="Hintergrund der Vorschau">
+          <button class="knopf" data-setze="vorschauGrund" data-v="szene">Szene</button>
+          <button class="knopf" data-setze="vorschauGrund" data-v="dunkel">dunkel</button>
+          <button class="knopf" data-setze="vorschauGrund" data-v="hell">hell</button>
+        </span>
+      </div>
+    </section>
+
+    <details class="karte" id="hilfe">
+      <summary>Ablage &amp; Tasten</summary>
+      <div class="leise">Das Kreuz liest diese Datei:</div>
+      <div class="pfad"><code>Dokumente\Fadenkreuz\fadenkreuz.bmp</code></div>
+      <p class="hinweis">Einmal „Speichern unter …“ genau dort speichern. Danach merkt sich der Editor die Datei, und „live“ schreibt jede Änderung hinein. Das Kreuz übernimmt sie nach spätestens einer Sekunde. Liegt neben der fadenkreuz.exe eine <code>datenordner.txt</code>, gilt der Ordner, der darin steht.</p>
+      <div class="tasten" style="margin-top: 10px">
+        <span><kbd>Strg</kbd>+<kbd>Alt</kbd>+<kbd>F9</kbd></span><span>Kreuz ein/aus</span>
+        <span><kbd>Strg</kbd>+<kbd>Alt</kbd>+<kbd>F10</kbd></span><span>im Spiel: nur dort zeigen (nochmal: streichen)</span>
+        <span><kbd>Strg</kbd>+<kbd>Alt</kbd>+<kbd>F12</kbd></span><span>Kreuz beenden</span>
+        <span><kbd>B</kbd> <kbd>E</kbd> <kbd>L</kbd> <kbd>K</kbd> <kbd>O</kbd> <kbd>F</kbd> <kbd>I</kbd></span><span>Stift, Radierer, Linie, Ring, Oval, Füllen, Pipette</span>
+        <span><kbd>M</kbd></span><span>Spiegeln umschalten</span>
+        <span><kbd>Strg</kbd>+<kbd>Z</kbd> / <kbd>Y</kbd></span><span>rückgängig / wiederholen</span>
+        <span><kbd>Strg</kbd>+<kbd>S</kbd></span><span>speichern</span>
+        <span>rechte Maustaste</span><span>radieren</span>
+      </div>
+    </details>
+  </aside>
+</main>
+
+<script>
+'use strict';
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const MIN = 5, MAX = 63;
+const SPEICHER = 'fadenkreuz2';
+
+const z = {
+  N: 21, px: new Uint32Array(21 * 21),
+  werkzeug: 'stift', spiegel: 'aus', feldGrund: 'kariert', vorschauGrund: 'szene', zoom: 2,
+  farbe: '#33ff88', deck: 100,
+  rand: 1, randFarbe: '#000000', randDeck: 85, weich: false,
+  arm: 6, dicke: 1, luecke: 2, live: true,
+};
+const ZAHLEN = new Set(['rand', 'zoom']);
+
+// ---------- Farben ----------
+const argb = (hex, prozent) => ((Math.round(prozent * 2.55) << 24) | parseInt(hex.slice(1), 16)) >>> 0;
+const teile = c => [(c >> 16) & 255, (c >> 8) & 255, c & 255, c >>> 24];
+const css = c => { const [r, g, b, a] = teile(c); return `rgba(${r},${g},${b},${(a / 255).toFixed(3)})`; };
+const hexVon = c => '#' + (c & 0xffffff).toString(16).padStart(6, '0');
+const stiftFarbe = () => argb(z.farbe, z.deck);
+
+// ---------- Bild zusammensetzen (Zeichnung + Umrandung) ----------
+function zusammensetzen(N, px, o = z) {
+  const t = +o.rand, M = N + 2 * t, bild = new Uint32Array(M * M);
+  if (t > 0) {
+    const abstand = new Float32Array(M * M).fill(Infinity), r2 = t * t + t;
+    for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
+      if (!px[y * N + x]) continue;
+      for (let dy = -t; dy <= t; dy++) for (let dx = -t; dx <= t; dx++) {
+        const q = dx * dx + dy * dy;
+        if (q > r2) continue;
+        const i = (y + t + dy) * M + x + t + dx, d = Math.sqrt(q);
+        if (d < abstand[i]) abstand[i] = d;
+      }
+    }
+    const basis = parseInt(o.randFarbe.slice(1), 16), deck = o.randDeck / 100;
+    for (let i = 0; i < bild.length; i++) {
+      const d = abstand[i];
+      if (d === Infinity || d === 0) continue;
+      const f = o.weich ? Math.min(1, Math.max(0, (t + 1 - d) / t)) : 1;
+      const a = Math.round(255 * deck * f);
+      if (a > 0) bild[i] = ((a << 24) | basis) >>> 0;
+    }
+  }
+  for (let y = 0; y < N; y++) for (let x = 0; x < N; x++)
+    if (px[y * N + x]) bild[(y + t) * M + x + t] = px[y * N + x];
+  return { M, t, bild };
+}
+
+function alsBild(b) {
+  const c = document.createElement('canvas');
+  c.width = c.height = b.M;
+  const img = c.getContext('2d').createImageData(b.M, b.M);
+  for (let i = 0; i < b.bild.length; i++) {
+    const [r, g, bl, a] = teile(b.bild[i]);
+    img.data.set([r, g, bl, a], i * 4);
+  }
+  c.getContext('2d').putImageData(img, 0, 0);
+  return c;
+}
+
+// ---------- Hintergründe ----------
+function szene(ctx, x, y, w, h) {
+  const g = ctx.createLinearGradient(0, y, 0, y + h);
+  g.addColorStop(0, '#36465a'); g.addColorStop(.5, '#66788a');
+  g.addColorStop(.5, '#3e4833'); g.addColorStop(1, '#262c20');
+  ctx.fillStyle = g; ctx.fillRect(x, y, w, h);
+  ctx.fillStyle = '#4a5640';                        // Hügel am Horizont
+  ctx.beginPath(); ctx.moveTo(x, y + h * .5);
+  ctx.quadraticCurveTo(x + w * .2, y + h * .38, x + w * .42, y + h * .5);
+  ctx.quadraticCurveTo(x + w * .7, y + h * .34, x + w, y + h * .47);
+  ctx.lineTo(x + w, y + h * .5); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = '#5b5852';                        // Mauer rechts
+  ctx.fillRect(x + w * .62, y + h * .36, w * .2, h * .3);
+  ctx.fillStyle = '#4d4a45';
+  ctx.fillRect(x + w * .62, y + h * .36, w * .2, h * .03);
+}
+function grund(ctx, x, y, w, h, art, zelle) {
+  if (art === 'szene') { szene(ctx, x, y, w, h); return; }
+  if (art === 'kariert' && zelle) {
+    const n = Math.round(w / zelle);
+    for (let j = 0; j < n; j++) for (let i = 0; i < n; i++) {
+      ctx.fillStyle = (i + j) % 2 ? '#1c1f25' : '#23272e';
+      ctx.fillRect(x + i * zelle, y + j * zelle, zelle, zelle);
+    }
+    return;
+  }
+  ctx.fillStyle = { dunkel: '#111317', hell: '#b9bec6', kariert: '#1f2228' }[art] || '#111317';
+  ctx.fillRect(x, y, w, h);
+}
+
+// ---------- Zeichenfeld ----------
+const raster = $('#raster'), rctx = raster.getContext('2d');
+let geo = { c: 10, off: 0 };
+let hover = null;
+
+function feldGroesse() {
+  const f = $('#feld');
+  const seite = Math.max(160, Math.floor(Math.min(f.clientWidth, f.clientHeight)));
+  const dpr = window.devicePixelRatio || 1;
+  raster.style.width = raster.style.height = seite + 'px';
+  raster.width = raster.height = Math.round(seite * dpr);
+  malen();
+}
+
+function spiegelpunkte(x, y) {
+  const N = z.N, a = N - 1 - x, b = N - 1 - y;
+  switch (z.spiegel) {
+    case 'h': return [[x, y], [a, y]];
+    case 'v': return [[x, y], [x, b]];
+    case '4': return [[x, y], [a, y], [x, b], [a, b]];
+    default: return [[x, y]];
+  }
+}
+
+function malenRaster(b) {
+  const W = raster.width, N = z.N;
+  const c = Math.floor(W / N), off = Math.floor((W - c * N) / 2);
+  geo = { c, off };
+  rctx.fillStyle = '#0c0e11';
+  rctx.fillRect(0, 0, W, W);
+  grund(rctx, off, off, c * N, c * N, z.feldGrund, c);
+
+  for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
+    const farbe = b.bild[(y + b.t) * b.M + x + b.t];
+    if (farbe) { rctx.fillStyle = css(farbe); rctx.fillRect(off + x * c, off + y * c, c, c); }
+  }
+
+  const hell = z.feldGrund === 'hell';
+  if (c >= 5) {
+    rctx.fillStyle = hell ? 'rgba(0,0,0,.10)' : 'rgba(255,255,255,.055)';
+    for (let i = 1; i < N; i++) {
+      rctx.fillRect(off + i * c, off, 1, c * N);
+      rctx.fillRect(off, off + i * c, c * N, 1);
+    }
+  }
+  // Mitte: Zeile und Spalte rahmen, Mittelpixel betonen
+  const m = (N - 1) / 2;
+  rctx.strokeStyle = hell ? 'rgba(40,110,80,.55)' : 'rgba(95,174,139,.42)';
+  rctx.lineWidth = 1;
+  rctx.strokeRect(off + m * c + .5, off + .5, c - 1, c * N - 1);
+  rctx.strokeRect(off + .5, off + m * c + .5, c * N - 1, c - 1);
+  rctx.strokeStyle = hell ? 'rgba(30,90,65,.9)' : 'rgba(150,215,185,.85)';
+  rctx.lineWidth = Math.max(1, Math.round(c / 12));
+  const k = Math.max(2, Math.round(c / 4)), cx = off + m * c, cy = off + m * c;
+  rctx.beginPath();
+  for (const [px0, py0, dx, dy] of [[cx, cy, 1, 1], [cx + c, cy, -1, 1], [cx, cy + c, 1, -1], [cx + c, cy + c, -1, -1]]) {
+    rctx.moveTo(px0 + dx * k, py0); rctx.lineTo(px0, py0); rctx.lineTo(px0, py0 + dy * k);
+  }
+  rctx.stroke();
+
+  // Zeiger mit Spiegelpunkten
+  if (hover && !zug) {
+    const loescht = z.werkzeug === 'radierer';
+    const lw = Math.max(1, Math.round(c / 10));
+    spiegelpunkte(hover[0], hover[1]).forEach(([x, y], i) => {
+      if (x < 0 || y < 0 || x >= N || y >= N) return;
+      rctx.lineWidth = lw;
+      rctx.strokeStyle = loescht ? 'rgba(255,255,255,.75)' : css((stiftFarbe() & 0xffffff | 0xff000000) >>> 0);
+      rctx.globalAlpha = i === 0 ? 1 : .45;
+      rctx.strokeRect(off + x * c + lw / 2, off + y * c + lw / 2, c - lw, c - lw);
+      rctx.globalAlpha = 1;
+    });
+  }
+}
+
+// ---------- Vorschau ----------
+const vorschau = $('#vorschau'), vctx = vorschau.getContext('2d');
+function malenVorschau(b) {
+  const dpr = window.devicePixelRatio || 1;
+  vorschau.width = Math.round(vorschau.clientWidth * dpr);
+  vorschau.height = Math.round(vorschau.clientHeight * dpr);
+  grund(vctx, 0, 0, vorschau.width, vorschau.height, z.vorschauGrund, 0);
+  const bild = alsBild(b), f = z.zoom, mitte = (b.M - 1) / 2;
+  vctx.imageSmoothingEnabled = false;
+  vctx.drawImage(bild, Math.floor(vorschau.width / 2) - mitte * f, Math.floor(vorschau.height / 2) - mitte * f, b.M * f, b.M * f);
+}
+
+// ---------- Vorlagen ----------
+const VORLAGEN = [
+  ['kreuz', 'Kreuz'], ['kreuzpunkt', 'Kreuz + Punkt'], ['punkt', 'Punkt'], ['rund', 'Punkt rund'],
+  ['t', 'T'], ['x', 'X'], ['kreis', 'Ring + Punkt'], ['oval', 'Oval weiß'],
+];
+const OVAL_STIL = { farbe: '#ffffff', deck: 100, rand: 2, randFarbe: '#000000', randDeck: 90, weich: true };
+
+function erzeugen(art, N0) {
+  const L = z.arm, d = z.dicke, g = z.luecke, h = (d - 1) / 2;
+  const rx = Math.max(1, Math.round(L * .75)), ry = Math.max(1, Math.round(L * .35));
+  const reichweite = { punkt: h, rund: h + 1, oval: rx }[art] ?? g + L + h;
+  const N = Math.min(MAX, Math.max(N0, 2 * reichweite + 3));
+  const px = new Uint32Array(N * N), m = (N - 1) / 2;
+  const c = art === 'oval' ? argb(OVAL_STIL.farbe, OVAL_STIL.deck) : stiftFarbe();
+  const p = (x, y) => { if (x >= 0 && y >= 0 && x < N && y < N) px[y * N + x] = c; };
+  const punkt = () => { for (let a = -h; a <= h; a++) for (let b = -h; b <= h; b++) p(m + a, m + b); };
+  const arm = (dx, dy) => {
+    for (let k = g + 1; k <= g + L; k++) for (let s = -h; s <= h; s++) p(m + dx * k + dy * s, m + dy * k + dx * s);
+  };
+  switch (art) {
+    case 'kreuz': arm(1, 0); arm(-1, 0); arm(0, 1); arm(0, -1); if (g === 0) punkt(); break;
+    case 'kreuzpunkt': arm(1, 0); arm(-1, 0); arm(0, 1); arm(0, -1); punkt(); break;
+    case 'punkt': punkt(); break;
+    case 'rund': {
+      const r = h + 1;
+      for (let y = -r; y <= r; y++) for (let x = -r; x <= r; x++) if (x * x + y * y <= r * r + r * .6) p(m + x, m + y);
+      break;
+    }
+    case 't': arm(1, 0); arm(-1, 0); arm(0, 1); if (g === 0) punkt(); break;
+    case 'x':
+      for (let k = g + 1; k <= g + L; k++) for (let s = -h; s <= h; s++)
+        for (const [a, b] of [[1, 1], [1, -1], [-1, 1], [-1, -1]]) p(m + a * k + s, m + b * k);
+      if (g === 0) punkt();
+      break;
+    case 'kreis': {
+      const r = g + L;
+      for (let y = -r - h - 1; y <= r + h + 1; y++) for (let x = -r - h - 1; x <= r + h + 1; x++)
+        if (Math.abs(Math.hypot(x, y) - r) <= h + .5) p(m + x, m + y);
+      punkt();
+      break;
+    }
+    case 'oval': {
+      // geglättet: Randpixel bekommen den Anteil Weiß, der Rest ist das Schwarz des Rands
+      const ax = rx + .5, ay = ry + .5, S = 4;
+      for (let y = -ry - 1; y <= ry + 1; y++) for (let x = -rx - 1; x <= rx + 1; x++) {
+        let n = 0;
+        for (let j = 0; j < S; j++) for (let i = 0; i < S; i++) {
+          const sx = x - .5 + (i + .5) / S, sy = y - .5 + (j + .5) / S;
+          if ((sx / ax) ** 2 + (sy / ay) ** 2 <= 1) n++;
+        }
+        const v = Math.round(255 * n / (S * S));
+        if (v >= 20 && m + x >= 0 && m + y >= 0 && m + x < N && m + y < N)
+          px[(m + y) * N + m + x] = ((255 << 24) | (v << 16) | (v << 8) | v) >>> 0;
+      }
+      break;
+    }
+  }
+  return { N, px, stil: art === 'oval' ? OVAL_STIL : null };
+}
+
+function vorlage(art) {
+  merken();
+  const e = erzeugen(art, z.N);
+  z.N = e.N; z.px = e.px;
+  if (e.stil) Object.assign(z, e.stil);
+  oberflaeche();
+  geaendert();
+}
+
+function kachelnBauen() {
+  const ziel = $('#vorlagen');
+  for (const [art, name] of VORLAGEN) {
+    const k = document.createElement('button');
+    k.className = 'kachel' + (art === 'oval' ? ' neu' : '');
+    k.dataset.vorlage = art;
+    k.title = art === 'oval' ? 'Weißes Oval mit weichem schwarzem Rand' : name;
+    k.innerHTML = `<canvas width="104" height="104"></canvas><span>${name}</span>`;
+    k.addEventListener('click', () => vorlage(art));
+    ziel.append(k);
+  }
+}
+function kachelMalen(cv, b) {
+  const ctx = cv.getContext('2d'), W = cv.width;
+  ctx.fillStyle = '#1b1e24';
+  ctx.fillRect(0, 0, W, W);
+  ctx.imageSmoothingEnabled = b.M <= W;
+  const f = b.M <= W ? Math.floor(W / b.M) : W / b.M, s = b.M * f, o = Math.floor((W - s) / 2);
+  ctx.drawImage(alsBild(b), o, o, s, s);
+}
+function kachelnMalen() {
+  for (const k of $$('.kachel[data-vorlage]')) {   // nur die eingebauten; eigene zeichnet meineZeigen()
+    const e = erzeugen(k.dataset.vorlage, 5);
+    kachelMalen(k.querySelector('canvas'), zusammensetzen(e.N, e.px, e.stil ? { ...z, ...e.stil } : z));
+  }
+}
+
+// ---------- Zeichnen ----------
+function linie(x0, y0, x1, y1, c) {
+  const dx = Math.abs(x1 - x0), dy = -Math.abs(y1 - y0), sx = x0 < x1 ? 1 : -1, sy = y0 < y1 ? 1 : -1;
+  let f = dx + dy;
+  for (;;) {
+    setzen(x0, y0, c);
+    if (x0 === x1 && y0 === y1) break;
+    const f2 = 2 * f;
+    if (f2 >= dy) { f += dy; x0 += sx; }
+    if (f2 <= dx) { f += dx; y0 += sy; }
+  }
+}
+function setzen(x, y, c) {
+  for (const [a, b] of spiegelpunkte(x, y)) if (a >= 0 && b >= 0 && a < z.N && b < z.N) z.px[b * z.N + a] = c;
+}
+function ring(cx, cy, r, c) {
+  if (r === 0) { setzen(cx, cy, c); return; }
+  let x = r, y = 0, f = 1 - r;
+  while (x >= y) {
+    for (const [a, b] of [[x, y], [y, x], [-y, x], [-x, y], [-x, -y], [-y, -x], [y, -x], [x, -y]]) setzen(cx + a, cy + b, c);
+    y++;
+    if (f < 0) f += 2 * y + 1; else { x--; f += 2 * (y - x) + 1; }
+  }
+}
+function oval(cx, cy, rx, ry, c) {
+  for (let y = -ry; y <= ry; y++) for (let x = -rx; x <= rx; x++)
+    if ((x / (rx + .5)) ** 2 + (y / (ry + .5)) ** 2 <= 1) setzen(cx + x, cy + y, c);
+}
+function fuellen(x0, y0, c) {
+  const N = z.N, alt = z.px[y0 * N + x0];
+  if (alt === c) return;
+  const stapel = [[x0, y0]];
+  while (stapel.length) {
+    const [x, y] = stapel.pop();
+    if (x < 0 || y < 0 || x >= N || y >= N || z.px[y * N + x] !== alt) continue;
+    z.px[y * N + x] = c;
+    stapel.push([x + 1, y], [x - 1, y], [x, y + 1], [x, y - 1]);
+  }
+}
+
+let zug = null;
+function zelle(ev) {
+  const r = raster.getBoundingClientRect(), s = raster.width / r.width;
+  return [Math.floor(((ev.clientX - r.left) * s - geo.off) / geo.c), Math.floor(((ev.clientY - r.top) * s - geo.off) / geo.c)];
+}
+const drin = ([x, y]) => x >= 0 && y >= 0 && x < z.N && y < z.N;
+
+function anwenden(p) {
+  const c = z.werkzeug === 'radierer' || zug.rechts ? 0 : stiftFarbe();
+  const w = zug.rechts && !['fuellen', 'linie', 'kreis', 'oval'].includes(z.werkzeug) ? 'radierer' : z.werkzeug;
+  if (w === 'stift' || w === 'radierer') {
+    linie(zug.letzt[0], zug.letzt[1], p[0], p[1], c);
+    zug.letzt = p;
+  } else if (w === 'linie' || w === 'kreis' || w === 'oval') {
+    z.px.set(zug.basis);
+    const [sx, sy] = zug.start;
+    if (w === 'linie') linie(sx, sy, p[0], p[1], c);
+    else if (w === 'kreis') ring(sx, sy, Math.round(Math.hypot(p[0] - sx, p[1] - sy)), c);
+    else oval(sx, sy, Math.abs(p[0] - sx), Math.abs(p[1] - sy), c);
+  }
+  malen();
+}
+
+raster.addEventListener('contextmenu', ev => ev.preventDefault());
+raster.addEventListener('pointerdown', ev => {
+  const p = zelle(ev);
+  if (!drin(p)) return;
+  if (z.werkzeug === 'pipette') {
+    const farbe = z.px[p[1] * z.N + p[0]];
+    if (farbe) {
+      z.farbe = hexVon(farbe); z.deck = Math.max(10, Math.round((farbe >>> 24) / 2.55));
+      melden(`Farbe ${z.farbe} aufgenommen`);
+    }
+    waehle('stift'); oberflaeche(); merkeZustand(); malen();
+    return;
+  }
+  raster.setPointerCapture(ev.pointerId);
+  merken();
+  if (z.werkzeug === 'fuellen') {
+    const c = ev.button === 2 ? 0 : stiftFarbe();
+    for (const [a, b] of spiegelpunkte(p[0], p[1])) if (drin([a, b])) fuellen(a, b, c);
+    geaendert();
+    return;
+  }
+  zug = { start: p, letzt: p, basis: z.px.slice(), rechts: ev.button === 2 };
+  anwenden(p);
+});
+raster.addEventListener('pointermove', ev => {
+  const p = zelle(ev);
+  if (drin(p)) {
+    const m = (z.N - 1) / 2, x = p[0] - m, y = p[1] - m;
+    const zahl = v => v > 0 ? '+' + v : v < 0 ? '−' + -v : '0';
+    $('#pos').innerHTML = `Pixel <b>${zahl(x)} | ${zahl(y)}</b>`;
+    hover = p;
+  } else {
+    hover = null;
+    $('#pos').textContent = 'Pixel –';
+  }
+  if (zug) anwenden(p); else malenRaster(zusammensetzen(z.N, z.px));
+});
+raster.addEventListener('pointerleave', () => { hover = null; $('#pos').textContent = 'Pixel –'; if (!zug) malen(); });
+function loslassen() { if (zug) { zug = null; geaendert(); } }
+raster.addEventListener('pointerup', loslassen);
+raster.addEventListener('pointercancel', loslassen);
+
+// ---------- Rückgängig / Wiederholen ----------
+const rueck = [], vor = [];
+const schnappschuss = () => ({ N: z.N, px: z.px.slice() });
+function merken() { rueck.push(schnappschuss()); if (rueck.length > 100) rueck.shift(); vor.length = 0; knoepfe(); }
+function einsetzen(s) { z.N = s.N; z.px = s.px; geaendert(); }
+function zurueck() { const s = rueck.pop(); if (!s) return; vor.push(schnappschuss()); einsetzen(s); }
+function wieder() { const s = vor.pop(); if (!s) return; rueck.push(schnappschuss()); einsetzen(s); }
+function knoepfe() { $('#rueck').disabled = !rueck.length; $('#vor').disabled = !vor.length; }
+
+// ---------- Feldgröße ----------
+function groesse(neu) {
+  neu = Math.max(MIN, Math.min(MAX, neu | 1));
+  if (neu === z.N) return;
+  merken();
+  const alt = z.px, an = z.N, d = (neu - an) / 2, px = new Uint32Array(neu * neu);
+  for (let y = 0; y < an; y++) for (let x = 0; x < an; x++) {
+    const nx = x + d, ny = y + d;
+    if (nx >= 0 && ny >= 0 && nx < neu && ny < neu) px[ny * neu + nx] = alt[y * an + x];
+  }
+  z.N = neu; z.px = px;
+  geaendert();
+}
+
+// ---------- BMP ----------
+function alsBmp() {
+  const { M, bild } = zusammensetzen(z.N, z.px);
+  const groesse = 54 + M * M * 4, buf = new ArrayBuffer(groesse), v = new DataView(buf);
+  v.setUint8(0, 0x42); v.setUint8(1, 0x4d); v.setUint32(2, groesse, true); v.setUint32(10, 54, true);
+  v.setUint32(14, 40, true); v.setInt32(18, M, true); v.setInt32(22, -M, true);   // von oben nach unten
+  v.setUint16(26, 1, true); v.setUint16(28, 32, true); v.setUint32(34, M * M * 4, true);
+  v.setInt32(38, 2835, true); v.setInt32(42, 2835, true);
+  for (let i = 0; i < bild.length; i++) {
+    const c = bild[i], o = 54 + i * 4;
+    v.setUint8(o, c & 255); v.setUint8(o + 1, (c >> 8) & 255); v.setUint8(o + 2, (c >> 16) & 255); v.setUint8(o + 3, c >>> 24);
+  }
+  return new Blob([buf], { type: 'image/bmp' });
+}
+
+function ausBmp(buf) {
+  const v = new DataView(buf);
+  if (buf.byteLength < 54 || v.getUint8(0) !== 0x42 || v.getUint8(1) !== 0x4d) throw new Error('Das ist keine BMP-Datei.');
+  const off = v.getUint32(10, true), w = v.getInt32(18, true);
+  let h = v.getInt32(22, true);
+  const bpp = v.getUint16(28, true), vonOben = h < 0;
+  if (vonOben) h = -h;
+  if (bpp !== 24 && bpp !== 32) throw new Error('Nur BMP mit 24 oder 32 Bit geht.');
+  const zeile = Math.floor((w * bpp + 31) / 32) * 4;
+  let alpha = false;
+  if (bpp === 32) for (let y = 0; y < h && !alpha; y++) for (let x = 0; x < w; x++)
+    if (v.getUint8(off + y * zeile + x * 4 + 3)) { alpha = true; break; }
+  merken();
+  const N = Math.max(MIN, Math.min(MAX, Math.max(w, h) | 1)), px = new Uint32Array(N * N);
+  const ox = Math.floor((N - w) / 2), oy = Math.floor((N - h) / 2);
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+    const o = off + (vonOben ? y : h - 1 - y) * zeile + x * (bpp / 8);
+    const b = v.getUint8(o), g = v.getUint8(o + 1), r = v.getUint8(o + 2);
+    const a = alpha ? v.getUint8(o + 3) : (r === 255 && g === 0 && b === 255 ? 0 : 255);
+    const nx = x + ox, ny = y + oy;
+    if (a && nx >= 0 && ny >= 0 && nx < N && ny < N) px[ny * N + nx] = ((a << 24) | (r << 16) | (g << 8) | b) >>> 0;
+  }
+  z.N = N; z.px = px;
+  z.rand = 0;   // eine geladene Datei enthält ihren Rand schon, sonst käme er doppelt
+  oberflaeche();
+  geaendert();
+}
+
+// ---------- Datei: verbinden, merken, speichern ----------
+let ziel = null, speicherTimer = 0;
+const BMP_TYP = [{ description: 'Bitmap', accept: { 'image/bmp': ['.bmp'] } }];
+const kannDirekt = 'showSaveFilePicker' in window;
+
+function idb(modus, arbeit) {
+  return new Promise((ja, nein) => {
+    const r = indexedDB.open('fadenkreuz', 1);
+    r.onupgradeneeded = () => r.result.createObjectStore('griffe');
+    r.onerror = () => nein(r.error);
+    r.onsuccess = () => {
+      const tx = r.result.transaction('griffe', modus), q = arbeit(tx.objectStore('griffe'));
+      tx.oncomplete = () => { ja(q.result); r.result.close(); };
+      tx.onerror = () => nein(tx.error);
+    };
+  });
+}
+const griffLaden = () => idb('readonly', s => s.get('ziel'));
+const griffMerken = g => idb('readwrite', s => s.put(g, 'ziel'));
+
+function dateiStatus(art, text) {
+  $('#datei').dataset.art = art;
+  $('#datei-text').textContent = text;
+}
+async function verbunden(griff) {
+  ziel = griff;
+  $('#verbinden').hidden = true;
+  dateiStatus('ok', `${griff.name} · verbunden`);
+  try { await griffMerken(griff); } catch {}
+}
+async function speichern() {
+  if (!kannDirekt) { herunterladen(); return; }
+  if (!ziel) { await speichernUnter(); return; }
+  try {
+    const w = await ziel.createWritable();
+    await w.write(alsBmp());
+    await w.close();
+    dateiStatus('ok', `${ziel.name} · gespeichert ${new Date().toLocaleTimeString('de-DE')}`);
+  } catch (err) {
+    dateiStatus('fehler', 'Speichern ging nicht: ' + err.message);
+  }
+}
+async function speichernUnter() {
+  if (!kannDirekt) { herunterladen(); return; }
+  try {
+    const opt = { suggestedName: 'fadenkreuz.bmp', types: BMP_TYP, startIn: ziel || 'documents' };
+    await verbunden(await showSaveFilePicker(opt));
+    await speichern();
+  } catch (err) {
+    if (err.name !== 'AbortError') dateiStatus('fehler', 'Fehler: ' + err.message);
+  }
+}
+async function oeffnen() {
+  try {
+    if (!window.showOpenFilePicker) { $('#datei-wahl').click(); return; }
+    const [griff] = await showOpenFilePicker({ types: BMP_TYP, startIn: ziel || 'documents' });
+    const darf = await griff.requestPermission({ mode: 'readwrite' }) === 'granted';   // solange der Klick frisch ist
+    if (darf) await verbunden(griff);
+    ausBmp(await (await griff.getFile()).arrayBuffer());
+    melden(`${griff.name} geladen – der Rand ist jetzt Teil der Zeichnung`);
+  } catch (err) {
+    if (err.name !== 'AbortError') melden(err.message, true);
+  }
+}
+function herunterladen() {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(alsBmp());
+  a.download = 'fadenkreuz.bmp';
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  melden('Heruntergeladen – nach Dokumente\\Fadenkreuz verschieben');
+}
+async function wiederVerbinden() {
+  try {
+    const griff = await griffLaden();
+    if (griff && await griff.requestPermission({ mode: 'readwrite' }) === 'granted') { await verbunden(griff); await speichern(); }
+  } catch (err) { dateiStatus('fehler', err.message); }
+}
+async function griffBeimStart() {
+  if (!kannDirekt) { dateiStatus('aus', 'Dieser Browser speichert nur per Download'); return; }
+  try {
+    const griff = await griffLaden();
+    if (!griff) return;
+    if (await griff.queryPermission({ mode: 'readwrite' }) === 'granted') { await verbunden(griff); return; }
+    dateiStatus('warte', `${griff.name} · Klick auf „Wieder verbinden“`);
+    $('#verbinden').hidden = false;
+  } catch {}
+}
+
+$('#speichern').addEventListener('click', speichern);
+$('#speichern-unter').addEventListener('click', speichernUnter);
+$('#oeffnen').addEventListener('click', oeffnen);
+$('#datei-wahl').addEventListener('change', async ev => {
+  const f = ev.target.files[0];
+  ev.target.value = '';
+  if (!f) return;
+  try { ausBmp(await f.arrayBuffer()); melden(`${f.name} geladen`); } catch (err) { melden(err.message, true); }
+});
+$('#verbinden').addEventListener('click', wiederVerbinden);
+
+// ---------- Meine Fadenkreuze ----------
+const MEINE = 'fadenkreuz-meine';
+let meine = [];
+
+function zuText(px) {
+  const b = new Uint8Array(px.buffer, px.byteOffset, px.byteLength);
+  let s = '';
+  for (let i = 0; i < b.length; i += 0x8000) s += String.fromCharCode.apply(null, b.subarray(i, i + 0x8000));
+  return btoa(s);
+}
+function ausText(text, N) {
+  const s = atob(text);
+  if (s.length !== N * N * 4) throw new Error('Pixel passen nicht zur Feldgröße');
+  const b = new Uint8Array(s.length);
+  for (let i = 0; i < s.length; i++) b[i] = s.charCodeAt(i);
+  return new Uint32Array(b.buffer);
+}
+function gueltig(e) {
+  if (!e || typeof e.name !== 'string' || !e.name.trim() || typeof e.px !== 'string') return false;
+  if (!Number.isInteger(e.N) || e.N < MIN || e.N > MAX || e.N % 2 !== 1) return false;
+  if (![0, 1, 2, 3, 4].includes(e.rand) || !/^#[0-9a-f]{6}$/i.test(e.randFarbe)) return false;
+  if (!(e.randDeck >= 10 && e.randDeck <= 100)) return false;
+  try { ausText(e.px, e.N); return true; } catch { return false; }
+}
+const sauber = e => ({ name: e.name.trim().slice(0, 24), N: e.N, px: e.px, rand: e.rand, randFarbe: e.randFarbe.toLowerCase(), randDeck: e.randDeck, weich: !!e.weich });
+
+function meineLaden() {
+  try {
+    const liste = JSON.parse(localStorage.getItem(MEINE));
+    meine = Array.isArray(liste) ? liste.filter(gueltig).map(sauber) : [];
+  } catch { meine = []; }
+}
+function meineSichern() {
+  try { localStorage.setItem(MEINE, JSON.stringify(meine)); return true; }
+  catch { melden('Der Browser-Speicher ist voll – sichere deine Fadenkreuze als Datei', true); return false; }
+}
+function meineZeigen() {
+  const liste = $('#meine');
+  liste.textContent = '';
+  $('#meine-leer').hidden = meine.length > 0;
+  for (const e of meine) {
+    const huelle = document.createElement('div');
+    huelle.className = 'huelle';
+    const k = document.createElement('button');
+    k.className = 'kachel';
+    k.title = `„${e.name}“ laden`;
+    const cv = document.createElement('canvas');
+    cv.width = cv.height = 104;
+    const name = document.createElement('span');
+    name.textContent = e.name;
+    k.append(cv, name);
+    k.addEventListener('click', () => meinesNehmen(e));
+    const weg = document.createElement('button');
+    weg.className = 'weg';
+    weg.textContent = '×';
+    weg.title = weg.ariaLabel = `„${e.name}“ löschen`;
+    let frist = 0;
+    weg.addEventListener('click', () => {
+      if (!weg.classList.contains('sicher')) {   // erster Klick fragt nur nach
+        weg.classList.add('sicher');
+        weg.textContent = 'löschen?';
+        frist = setTimeout(() => { weg.classList.remove('sicher'); weg.textContent = '×'; }, 3000);
+        return;
+      }
+      clearTimeout(frist);
+      meine = meine.filter(x => x !== e);
+      meineSichern();
+      meineZeigen();
+      melden(`„${e.name}“ gelöscht`);
+    });
+    huelle.append(k, weg);
+    liste.append(huelle);
+    kachelMalen(cv, zusammensetzen(e.N, ausText(e.px, e.N), e));
+  }
+}
+function meinesNehmen(e) {
+  merken();
+  z.N = e.N; z.px = ausText(e.px, e.N);
+  Object.assign(z, { rand: e.rand, randFarbe: e.randFarbe, randDeck: e.randDeck, weich: e.weich });
+  oberflaeche();
+  kachelnSpaeter();
+  geaendert();
+  melden(`„${e.name}“ geladen`);
+}
+function meinesMerken() {
+  if (!z.px.some(Boolean)) { melden('Erst etwas zeichnen', true); return; }
+  const name = $('#meine-name').value.trim() || `Fadenkreuz ${meine.length + 1}`;
+  const eintrag = sauber({ name, N: z.N, px: zuText(z.px), rand: z.rand, randFarbe: z.randFarbe, randDeck: z.randDeck, weich: z.weich });
+  const i = meine.findIndex(x => x.name.toLowerCase() === eintrag.name.toLowerCase());
+  if (i >= 0) meine[i] = eintrag; else meine.push(eintrag);
+  if (!meineSichern()) return;
+  $('#meine-name').value = '';
+  meineZeigen();
+  melden(i >= 0 ? `„${eintrag.name}“ überschrieben` : `„${eintrag.name}“ gemerkt`);
+}
+async function meineExport() {
+  if (!meine.length) { melden('Noch nichts zum Sichern', true); return; }
+  const blob = new Blob([JSON.stringify({ art: 'fadenkreuz-presets', version: 1, fadenkreuze: meine }, null, 1)], { type: 'application/json' });
+  try {
+    if (window.showSaveFilePicker) {
+      const griff = await showSaveFilePicker({ suggestedName: 'meine-fadenkreuze.json', startIn: 'documents',
+        types: [{ description: 'Fadenkreuze', accept: { 'application/json': ['.json'] } }] });
+      const w = await griff.createWritable();
+      await w.write(blob);
+      await w.close();
+    } else {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'meine-fadenkreuze.json';
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+    }
+    melden(`${meine.length} ${meine.length === 1 ? 'Fadenkreuz' : 'Fadenkreuze'} gesichert`);
+  } catch (err) {
+    if (err.name !== 'AbortError') melden(err.message, true);
+  }
+}
+async function meineImport(datei) {
+  try {
+    const d = JSON.parse(await datei.text());
+    const liste = (Array.isArray(d) ? d : d.fadenkreuze || []).filter(gueltig).map(sauber);
+    let neu = 0;
+    for (const e of liste) {
+      if (meine.some(x => x.name === e.name && x.px === e.px)) continue;
+      const doppelt = meine.some(x => x.name.toLowerCase() === e.name.toLowerCase());
+      meine.push(doppelt ? { ...e, name: (e.name + ' (2)').slice(0, 24) } : e);
+      neu++;
+    }
+    if (meineSichern()) {
+      meineZeigen();
+      melden(neu ? `${neu} ${neu === 1 ? 'Fadenkreuz' : 'Fadenkreuze'} eingelesen` : 'Nichts Neues in der Datei');
+    }
+  } catch {
+    melden('Die Datei ließ sich nicht lesen', true);
+  }
+}
+$('#meine-speichern').addEventListener('click', meinesMerken);
+$('#meine-name').addEventListener('keydown', ev => { if (ev.key === 'Enter') meinesMerken(); });
+$('#meine-export').addEventListener('click', meineExport);
+$('#meine-import').addEventListener('click', () => $('#meine-datei').click());
+$('#meine-datei').addEventListener('change', ev => {
+  const f = ev.target.files[0];
+  ev.target.value = '';
+  if (f) meineImport(f);
+});
+
+// ---------- Zustand ----------
+let meldTimer = 0;
+function melden(text, fehler = false) {
+  const m = $('#meldung');
+  m.textContent = text;
+  m.dataset.art = fehler ? 'fehler' : '';
+  clearTimeout(meldTimer);
+  meldTimer = setTimeout(() => { m.textContent = ''; }, 5000);
+}
+function merkeZustand() {
+  try { localStorage.setItem(SPEICHER, JSON.stringify({ ...z, px: Array.from(z.px) })); } catch {}
+}
+function zustandLaden() {
+  try {
+    const s = JSON.parse(localStorage.getItem(SPEICHER));
+    if (s && s.px && s.px.length === s.N * s.N) { Object.assign(z, s, { px: Uint32Array.from(s.px) }); return true; }
+    const alt = JSON.parse(localStorage.getItem('fadenkreuz'));   // Stand der ersten Fassung übernehmen
+    if (alt && alt.px && alt.px.length === alt.N * alt.N) {
+      z.N = alt.N; z.px = Uint32Array.from(alt.px);
+      const w = alt.werte || {};
+      for (const k of ['farbe', 'randFarbe']) if (w[k]) z[k] = w[k];
+      for (const k of ['deck', 'rand', 'randDeck', 'arm', 'dicke', 'luecke']) if (w[k] != null) z[k] = +w[k];
+      if ('spiegeln' in w) z.spiegel = w.spiegeln ? '4' : 'aus';
+      if ('live' in w) z.live = !!w.live;
+      return true;
+    }
+  } catch {}
+  return false;
+}
+
+function malen() {
+  const b = zusammensetzen(z.N, z.px);
+  malenRaster(b);
+  malenVorschau(b);
+  $('#groesse').textContent = `${z.N} × ${z.N}`;
+  $('#bildmass').textContent = `${b.M} × ${b.M} px`;
+  $('#anzahl').textContent = z.px.reduce((n, c) => n + (c ? 1 : 0), 0);
+}
+let kachelRahmen = 0;
+function kachelnSpaeter() { cancelAnimationFrame(kachelRahmen); kachelRahmen = requestAnimationFrame(kachelnMalen); }
+
+function geaendert() {
+  malen();
+  knoepfe();
+  merkeZustand();
+  if (ziel && z.live) {
+    clearTimeout(speicherTimer);
+    speicherTimer = setTimeout(speichern, 200);
+  }
+}
+function einstellungGeaendert(betrifftBild) {
+  oberflaeche();
+  kachelnSpaeter();
+  if (betrifftBild) geaendert(); else { merkeZustand(); malen(); }
+}
+
+// ---------- Bedienelemente ----------
+const MUSTER = ['#33ff88', '#00e5ff', '#ff3355', '#ffe14d', '#ff4dff', '#ff9a3c', '#ffffff', '#000000'];
+for (const m of MUSTER) {
+  const b = document.createElement('button');
+  b.style.setProperty('--c', m); b.dataset.farbe = m; b.title = m; b.setAttribute('aria-label', 'Farbe ' + m);
+  b.addEventListener('click', () => { z.farbe = m; einstellungGeaendert(false); });
+  $('#muster').append(b);
+}
+
+function waehle(w) { z.werkzeug = w; oberflaeche(); merkeZustand(); malen(); }
+
+function oberflaeche() {
+  for (const b of $$('[data-werkzeug]')) b.setAttribute('aria-pressed', b.dataset.werkzeug === z.werkzeug);
+  for (const b of $$('[data-setze]')) b.setAttribute('aria-pressed', String(z[b.dataset.setze]) === b.dataset.v);
+  for (const el of $$('[data-wert]')) el.value = z[el.dataset.wert];
+  for (const o of $$('[data-zeigt]')) o.value = z[o.dataset.zeigt] + (o.dataset.einheit || '');
+  $('#farbe').value = z.farbe; $('#farbe-chip').style.setProperty('--c', z.farbe);
+  if (document.activeElement !== $('#farbe-hex')) $('#farbe-hex').value = z.farbe;
+  $('#rand-farbe').value = z.randFarbe; $('#rand-chip').style.setProperty('--c', z.randFarbe);
+  for (const b of $$('#muster button')) b.setAttribute('aria-pressed', b.dataset.farbe === z.farbe);
+  $('#weich').checked = z.weich;
+  $('#live').checked = z.live;
+  $('#kleiner').disabled = z.N <= MIN; $('#groesser').disabled = z.N >= MAX;
+  raster.style.cursor = z.werkzeug === 'pipette' ? 'copy' : 'crosshair';
+}
+
+document.addEventListener('click', ev => {
+  const b = ev.target.closest('[data-setze]');
+  if (!b) return;
+  const k = b.dataset.setze;
+  z[k] = ZAHLEN.has(k) ? +b.dataset.v : b.dataset.v;
+  einstellungGeaendert(k === 'rand');
+});
+for (const b of $$('[data-werkzeug]')) b.addEventListener('click', () => waehle(b.dataset.werkzeug));
+for (const el of $$('[data-wert]')) el.addEventListener('input', () => {
+  z[el.dataset.wert] = +el.value;
+  einstellungGeaendert(el.dataset.wert === 'randDeck');
+});
+$('#farbe').addEventListener('input', ev => { z.farbe = ev.target.value; einstellungGeaendert(false); });
+$('#rand-farbe').addEventListener('input', ev => { z.randFarbe = ev.target.value; einstellungGeaendert(true); });
+$('#farbe-hex').addEventListener('change', ev => {
+  const v = ev.target.value.trim().replace(/^#?/, '#').toLowerCase();
+  if (/^#[0-9a-f]{6}$/.test(v)) { z.farbe = v; einstellungGeaendert(false); }
+  else { ev.target.value = z.farbe; melden('Bitte als #rrggbb eingeben', true); }
+});
+$('#weich').addEventListener('change', ev => { z.weich = ev.target.checked; einstellungGeaendert(true); });
+$('#live').addEventListener('change', ev => { z.live = ev.target.checked; merkeZustand(); if (z.live && ziel) speichern(); });
+$('#rueck').addEventListener('click', zurueck);
+$('#vor').addEventListener('click', wieder);
+$('#leeren').addEventListener('click', () => { merken(); z.px = new Uint32Array(z.N * z.N); geaendert(); });
+$('#kleiner').addEventListener('click', () => { groesse(z.N - 2); oberflaeche(); });
+$('#groesser').addEventListener('click', () => { groesse(z.N + 2); oberflaeche(); });
+
+document.addEventListener('keydown', ev => {
+  if (ev.target.matches('input:not([type=range]):not([type=checkbox])')) return;
+  const taste = ev.key.toLowerCase();
+  if (ev.ctrlKey || ev.metaKey) {
+    if (taste === 'z' && !ev.shiftKey) { ev.preventDefault(); zurueck(); }
+    else if (taste === 'y' || (taste === 'z' && ev.shiftKey)) { ev.preventDefault(); wieder(); }
+    else if (taste === 's') { ev.preventDefault(); speichern(); }
+    return;
+  }
+  if (ev.altKey) return;
+  const w = { b: 'stift', e: 'radierer', l: 'linie', k: 'kreis', o: 'oval', f: 'fuellen', i: 'pipette' }[taste];
+  if (w) { waehle(w); return; }
+  if (taste === 'm') {
+    const folge = ['aus', 'h', 'v', '4'];
+    z.spiegel = folge[(folge.indexOf(z.spiegel) + 1) % folge.length];
+    einstellungGeaendert(false);
+  }
+});
+
+// ---------- Start ----------
+kachelnBauen();
+if (!zustandLaden()) {
+  const e = erzeugen('kreuz', z.N);
+  z.N = e.N; z.px = e.px;
+}
+oberflaeche();
+knoepfe();
+kachelnMalen();
+meineLaden();
+meineZeigen();
+new ResizeObserver(feldGroesse).observe($('#feld'));
+new ResizeObserver(() => malen()).observe(vorschau);
+griffBeimStart();
+</script>
+</body>
+</html>

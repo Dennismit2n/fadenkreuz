@@ -1,0 +1,9 @@
+* text=auto
+# Windows-Werkzeuge erwarten CRLF (cmd scheitert an LF-Batchdateien still)
+*.bat text eol=crlf
+*.iss text eol=crlf
+*.ps1 text eol=crlf
+*.rc  text eol=crlf
+*.ico binary
+*.png binary
+*.webp binary

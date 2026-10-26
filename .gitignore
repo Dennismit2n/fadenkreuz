@@ -1,0 +1,22 @@
+# Gebautes – die exe und das Setup kommen in die Releases, nicht ins Repo
+build/
+*.exe
+*.obj
+*.res
+*.zip
+
+# Laufzeitdaten, falls die exe tragbar neben ihnen liegt
+fadenkreuz.bmp
+programme.txt
+datenordner.txt
+
+# Private Arbeitsnotizen
+_intern/
+
+# Python
+__pycache__/
+*.pyc
+
+# Betriebssystem
+Thumbs.db
+desktop.ini

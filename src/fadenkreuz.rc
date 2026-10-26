@@ -1,0 +1,30 @@
+#pragma code_page(65001)
+#include <winver.h>
+
+1 ICON "fadenkreuz.ico"
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION 1,0,0,0
+PRODUCTVERSION 1,0,0,0
+FILEOS VOS_NT_WINDOWS32
+FILETYPE VFT_APP
+BEGIN
+  BLOCK "StringFileInfo"
+  BEGIN
+    BLOCK "040704b0"
+    BEGIN
+      VALUE "CompanyName", "Dennis_mit_2n"
+      VALUE "FileDescription", "Fadenkreuz – Overlay in der Bildschirmmitte"
+      VALUE "FileVersion", "1.0.0"
+      VALUE "InternalName", "fadenkreuz"
+      VALUE "LegalCopyright", "© 2026 Dennis_mit_2n · MIT-Lizenz"
+      VALUE "OriginalFilename", "fadenkreuz.exe"
+      VALUE "ProductName", "Fadenkreuz"
+      VALUE "ProductVersion", "1.0.0"
+    END
+  END
+  BLOCK "VarFileInfo"
+  BEGIN
+    VALUE "Translation", 0x407, 1200
+  END
+END
