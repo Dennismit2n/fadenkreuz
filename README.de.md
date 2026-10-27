@@ -6,7 +6,9 @@
 
 [English version](README.md)
 
-![Der Editor: ein grünes Kreuz mit dünnem schwarzem Rand auf kariertem Raster, rechts eigene Fadenkreuze und Vorlagen, darunter eine 4-fache Vorschau vor einer Spielszene](docs/editor.webp)
+<p><img src="docs/editor.webp" width="55.2%" alt="Der Editor: ein grünes Kreuz mit dünnem schwarzem Rand auf kariertem Raster, rechts eigene Fadenkreuze und Vorlagen, darunter eine 4-fache Vorschau vor einer Spielszene"> <img src="docs/klein.webp" width="43%" alt="Die Mitte von vier Bildschirmen in voller Höhe, jeweils mit dem Fadenkreuz in der Mitte, auf grauem, lila, weißem und schwarzem Grund"></p>
+
+<sub>Rechts: die Mitte von vier Bildschirmen in voller Höhe, das Fadenkreuz im echten Größenverhältnis zum Bildschirm – so klein kann es im Spiel wirken.</sub>
 
 ---
 

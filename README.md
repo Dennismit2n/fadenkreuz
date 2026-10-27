@@ -6,7 +6,9 @@
 
 [Deutsche Fassung](README.de.md) — the editor and the setup speak English and German.
 
-![The editor: a green cross with a thin black outline on a chequered grid, your own crosshairs and templates on the right, a preview against a game-like scene](docs/editor-en.webp)
+<p><img src="docs/editor-en.webp" width="55.2%" alt="The editor: a green cross with a thin black outline on a chequered grid, your own crosshairs and templates on the right, a preview against a game-like scene"> <img src="docs/klein.webp" width="43%" alt="The middle of four screens at full height, each with the crosshair in the centre, on a grey, purple, white and black background"></p>
+
+<sub>Right: the middle of four screens at full height, the crosshair at its real size relative to the screen – this is how small it can look in a game.</sub>
 
 ---
 
