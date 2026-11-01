@@ -38,7 +38,9 @@ VersionInfoVersion={#Version}
 VersionInfoDescription=Fadenkreuz Setup
 
 [Languages]
-; Englisch zuerst: Wo Inno Setup keine Übersetzung mitbringt (Chinesisch, Hindi), zeigt das Setup Englisch
+; Englisch zuerst: Wo Inno Setup keine Übersetzung mitbringt (Hindi), zeigt das Setup Englisch.
+; Chinesisch ist die offizielle Inno-Übersetzung aus github.com/jrsoftware/issrc (Files/Languages),
+; sie liegt hier daneben, weil Inno Setup 6.7 sie noch nicht mitbringt.
 Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "german"; MessagesFile: "compiler:Languages\German.isl"
 Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
@@ -49,6 +51,7 @@ Name: "polish"; MessagesFile: "compiler:Languages\Polish.isl"
 Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"
 Name: "turkish"; MessagesFile: "compiler:Languages\Turkish.isl"
 Name: "russian"; MessagesFile: "compiler:Languages\Russian.isl"
+Name: "chinesesimplified"; MessagesFile: "ChineseSimplified.isl"
 Name: "japanese"; MessagesFile: "compiler:Languages\Japanese.isl"
 Name: "korean"; MessagesFile: "compiler:Languages\Korean.isl"
 
@@ -203,6 +206,21 @@ russian.StartEditor=Открыть редактор
 russian.StatusSignieren=Прицел настраивается, чтобы быть поверх всего …
 russian.KommentarKreuz=Прицел вкл./выкл.: Ctrl+Alt+F9 скрывает, Ctrl+Alt+F12 закрывает
 russian.KommentarEditor=Нарисовать свой прицел
+chinesesimplified.TypVoll=准星和编辑器
+chinesesimplified.TypKreuz=仅准星
+chinesesimplified.TypEditor=仅编辑器
+chinesesimplified.TypEigene=自定义选择
+chinesesimplified.KomponenteKreuz=准星：屏幕中央的覆盖层（约 1 MB 内存）
+chinesesimplified.KomponenteEditor=编辑器：绘制你自己的准星（只在打开时占用内存）
+chinesesimplified.GruppeExtra=附加：
+chinesesimplified.AufgabeDesktop=桌面快捷方式
+chinesesimplified.AufgabeAutostart=随 Windows 启动准星
+chinesesimplified.AufgabeOben=显示在所有内容之上：也位于开始菜单、任务栏和覆盖层之上（会创建一个只在这台电脑上有效的证书）
+chinesesimplified.StartKreuz=立即打开准星
+chinesesimplified.StartEditor=打开编辑器
+chinesesimplified.StatusSignieren=正在设置准星，使其显示在所有内容之上 …
+chinesesimplified.KommentarKreuz=准星开/关：Ctrl+Alt+F9 隐藏，Ctrl+Alt+F12 退出
+chinesesimplified.KommentarEditor=绘制你自己的准星
 japanese.TypVoll=照準とエディター
 japanese.TypKreuz=照準のみ
 japanese.TypEditor=エディターのみ

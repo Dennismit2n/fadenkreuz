@@ -4,7 +4,7 @@
 
 ![Windows](https://img.shields.io/badge/Windows-10%20%7C%2011-33ff88) ![RAM](https://img.shields.io/badge/RAM-about%201%20MB-0b0d0c) ![Languages](https://img.shields.io/badge/Languages-14-33ff88) ![License](https://img.shields.io/badge/License-MIT-0b0d0c)
 
-[Deutsche Fassung](README.de.md) — the editor speaks 14 languages, the setup 12 (Chinese and Hindi get the English setup).
+[Deutsche Fassung](README.de.md) — the editor speaks 14 languages, the setup 13 (Hindi gets the English setup).
 
 <p><img src="docs/editor-en.webp" width="55.2%" alt="The editor: a green cross with a thin black outline on a chequered grid, your own crosshairs and templates on the right, a preview against a game-like scene"> <img src="docs/klein.webp" width="43%" alt="The middle of four screens at full height, each with the crosshair in the centre, on a grey, purple, white and black background"></p>
 
@@ -71,7 +71,7 @@ Windows only allows that (it is called *UIAccess*, the same as for the on-screen
 - **Main screen only.**
 - **Exclusive fullscreen** games draw over every overlay. Switch the game to *borderless* or *windowed fullscreen*.
 - **Anti-cheat:** Fadenkreuz does not touch the game – it is a separate window. Still, a few competitive games dislike overlays; check before playing ranked.
-- The editor speaks 14 languages (English, German, Spanish, French, Italian, Dutch, Polish, Portuguese, Turkish, Russian, Hindi, Chinese, Japanese, Korean). It follows your browser’s language and has a language list in its top bar. The setup speaks the same languages except Chinese and Hindi, which Inno Setup does not ship; there it shows English.
+- The editor speaks 14 languages (English, German, Spanish, French, Italian, Dutch, Polish, Portuguese, Turkish, Russian, Hindi, Chinese, Japanese, Korean). It follows your browser’s language and has a language list in its top bar. The setup speaks the same languages except Hindi, which Inno Setup does not ship; there it shows English.
 
 ## Image format
 

@@ -71,7 +71,7 @@ Das erlaubt Windows (es heißt *UIAccess*, wie bei der Bildschirmtastatur) nur s
 - **Nur der Hauptbildschirm.**
 - Spiele im **exklusiven Vollbild** übermalen jedes Overlay. Stell das Spiel auf *randloses Fenster* bzw. *Vollbild im Fenster*.
 - **Anti-Cheat:** Fadenkreuz fasst das Spiel nicht an – es ist ein eigenes Fenster. Trotzdem mögen einige Wettkampf-Spiele keine Overlays; prüf das vor Ranglisten-Spielen.
-- Der Editor spricht 14 Sprachen (Deutsch, Englisch, Spanisch, Französisch, Italienisch, Niederländisch, Polnisch, Portugiesisch, Türkisch, Russisch, Hindi, Chinesisch, Japanisch, Koreanisch). Er folgt der Sprache deines Browsers und hat oben eine Sprachliste. Das Setup spricht dieselben Sprachen außer Chinesisch und Hindi, die Inno Setup nicht mitbringt; dort zeigt es Englisch.
+- Der Editor spricht 14 Sprachen (Deutsch, Englisch, Spanisch, Französisch, Italienisch, Niederländisch, Polnisch, Portugiesisch, Türkisch, Russisch, Hindi, Chinesisch, Japanisch, Koreanisch). Er folgt der Sprache deines Browsers und hat oben eine Sprachliste. Das Setup spricht dieselben Sprachen außer Hindi, das Inno Setup nicht mitbringt; dort zeigt es Englisch.
 
 ## Bildformat
 
