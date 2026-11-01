@@ -83,7 +83,7 @@ button, input, select { font: inherit; color: inherit; }
 #raster { display: block; touch-action: none; cursor: crosshair; border-radius: 6px; box-shadow: 0 0 0 1px var(--linie), 0 10px 30px rgba(0, 0, 0, .35); }
 .fuss { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; color: var(--leise); font-size: 12.5px; min-height: 32px; }
 .fuss b { color: var(--text); font-weight: 600; font-variant-numeric: tabular-nums; }
-.fuss .rechts { margin-left: auto; display: inline-flex; align-items: center; gap: 8px; }
+.fuss .rechts { margin-left: auto; display: inline-flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 8px; }
 #meldung { color: var(--text); }
 #meldung[data-art="fehler"] { color: #dba3a3; }
 .stepper { display: inline-flex; align-items: center; gap: 2px; }
@@ -146,7 +146,9 @@ kbd { display: inline-block; min-width: 18px; padding: 0 5px; border-radius: 4px
 
 @media (max-width: 880px) {
   body { overflow: auto; height: auto; display: block; }
-  .arbeit { grid-template-columns: 1fr; }
+  /* minmax(0, …) wie am Desktop: sonst wächst die Spalte mit der Zeichenfläche mit,
+     die ihre Größe aus genau dieser Spalte nimmt, und die Seite wird breiter als das Handy */
+  .arbeit { grid-template-columns: minmax(0, 1fr); }
   .feld { min-height: min(92vw, 640px); }
   .panel { border-left: 0; border-top: 1px solid var(--linie); }
 }
@@ -284,7 +286,7 @@ kbd { display: inline-block; min-width: 18px; padding: 0 5px; border-radius: 4px
     <section class="karte">
       <h2 data-t="vorschau">Vorschau</h2>
       <canvas id="vorschau"></canvas>
-      <div class="zeile" style="justify-content: space-between">
+      <div class="zeile" style="justify-content: space-between; flex-wrap: wrap">
         <span class="segment" role="group" data-t-aria="zoom">
           <button class="knopf" data-setze="zoom" data-v="1" data-t-title="zoomEcht">1:1</button>
           <button class="knopf" data-setze="zoom" data-v="2">2×</button>
