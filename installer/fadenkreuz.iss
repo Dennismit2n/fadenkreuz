@@ -38,8 +38,19 @@ VersionInfoVersion={#Version}
 VersionInfoDescription=Fadenkreuz Setup
 
 [Languages]
-Name: "german"; MessagesFile: "compiler:Languages\German.isl"
+; Englisch zuerst: Wo Inno Setup keine Übersetzung mitbringt (Chinesisch, Hindi), zeigt das Setup Englisch
 Name: "english"; MessagesFile: "compiler:Default.isl"
+Name: "german"; MessagesFile: "compiler:Languages\German.isl"
+Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
+Name: "french"; MessagesFile: "compiler:Languages\French.isl"
+Name: "italian"; MessagesFile: "compiler:Languages\Italian.isl"
+Name: "dutch"; MessagesFile: "compiler:Languages\Dutch.isl"
+Name: "polish"; MessagesFile: "compiler:Languages\Polish.isl"
+Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"
+Name: "turkish"; MessagesFile: "compiler:Languages\Turkish.isl"
+Name: "russian"; MessagesFile: "compiler:Languages\Russian.isl"
+Name: "japanese"; MessagesFile: "compiler:Languages\Japanese.isl"
+Name: "korean"; MessagesFile: "compiler:Languages\Korean.isl"
 
 [CustomMessages]
 german.TypVoll=Fadenkreuz und Editor
@@ -72,6 +83,156 @@ german.KommentarKreuz=Fadenkreuz ein/aus – Strg+Alt+F9 blendet aus, Strg+Alt+F
 english.KommentarKreuz=Crosshair on/off – Ctrl+Alt+F9 hides it, Ctrl+Alt+F12 quits
 german.KommentarEditor=Eigenes Fadenkreuz zeichnen
 english.KommentarEditor=Draw your own crosshair
+spanish.TypVoll=Punto de mira y editor
+spanish.TypKreuz=Solo el punto de mira
+spanish.TypEditor=Solo el editor
+spanish.TypEigene=Elegir yo mismo
+spanish.KomponenteKreuz=Punto de mira: el overlay en el centro de la pantalla (alrededor de 1 MB de RAM)
+spanish.KomponenteEditor=Editor: dibuja tus propios puntos de mira (solo usa memoria mientras está abierto)
+spanish.GruppeExtra=Además:
+spanish.AufgabeDesktop=Accesos directos en el escritorio
+spanish.AufgabeAutostart=Iniciar el punto de mira con Windows
+spanish.AufgabeOben=Mostrar por encima de todo: también sobre el menú Inicio, la barra de tareas y los overlays (crea un certificado válido solo en este PC)
+spanish.StartKreuz=Activar ahora el punto de mira
+spanish.StartEditor=Abrir el editor
+spanish.StatusSignieren=Preparando el punto de mira para quedar por encima de todo …
+spanish.KommentarKreuz=Punto de mira sí/no: Ctrl+Alt+F9 lo oculta, Ctrl+Alt+F12 lo cierra
+spanish.KommentarEditor=Dibujar tu propio punto de mira
+french.TypVoll=Réticule et éditeur
+french.TypKreuz=Seulement le réticule
+french.TypEditor=Seulement l’éditeur
+french.TypEigene=Choisir moi-même
+french.KomponenteKreuz=Réticule : l’overlay au centre de l’écran (environ 1 Mo de RAM)
+french.KomponenteEditor=Éditeur : dessiner vos propres réticules (n’utilise de la mémoire que lorsqu’il est ouvert)
+french.GruppeExtra=En plus :
+french.AufgabeDesktop=Raccourcis sur le bureau
+french.AufgabeAutostart=Lancer le réticule avec Windows
+french.AufgabeOben=Afficher au-dessus de tout : aussi au-dessus du menu Démarrer, de la barre des tâches et des overlays (crée un certificat valable uniquement sur ce PC)
+french.StartKreuz=Activer le réticule maintenant
+french.StartEditor=Ouvrir l’éditeur
+french.StatusSignieren=Préparation du réticule pour rester au-dessus de tout …
+french.KommentarKreuz=Réticule oui/non : Ctrl+Alt+F9 le masque, Ctrl+Alt+F12 le ferme
+french.KommentarEditor=Dessiner votre propre réticule
+italian.TypVoll=Mirino ed editor
+italian.TypKreuz=Solo il mirino
+italian.TypEditor=Solo l’editor
+italian.TypEigene=Scelgo io
+italian.KomponenteKreuz=Mirino: l’overlay al centro dello schermo (circa 1 MB di RAM)
+italian.KomponenteEditor=Editor: disegna i tuoi mirini (usa memoria solo mentre è aperto)
+italian.GruppeExtra=In più:
+italian.AufgabeDesktop=Collegamenti sul desktop
+italian.AufgabeAutostart=Avvia il mirino con Windows
+italian.AufgabeOben=Mostra sopra a tutto: anche sopra il menu Start, la barra delle applicazioni e gli overlay (crea un certificato valido solo su questo PC)
+italian.StartKreuz=Attiva subito il mirino
+italian.StartEditor=Apri l’editor
+italian.StatusSignieren=Preparo il mirino per stare sopra a tutto …
+italian.KommentarKreuz=Mirino sì/no: Ctrl+Alt+F9 lo nasconde, Ctrl+Alt+F12 lo chiude
+italian.KommentarEditor=Disegna il tuo mirino
+dutch.TypVoll=Vizier en editor
+dutch.TypKreuz=Alleen het vizier
+dutch.TypEditor=Alleen de editor
+dutch.TypEigene=Zelf kiezen
+dutch.KomponenteKreuz=Vizier: de overlay in het midden van het scherm (ongeveer 1 MB RAM)
+dutch.KomponenteEditor=Editor: zelf vizieren tekenen (gebruikt alleen geheugen zolang hij open is)
+dutch.GruppeExtra=Daarnaast:
+dutch.AufgabeDesktop=Snelkoppelingen op het bureaublad
+dutch.AufgabeAutostart=Vizier met Windows starten
+dutch.AufgabeOben=Boven alles tonen: ook boven het Startmenu, de taakbalk en overlays (maakt een certificaat dat alleen op deze pc geldt)
+dutch.StartKreuz=Vizier nu aanzetten
+dutch.StartEditor=Editor openen
+dutch.StatusSignieren=Vizier wordt ingesteld om boven alles te blijven …
+dutch.KommentarKreuz=Vizier aan/uit: Ctrl+Alt+F9 verbergt het, Ctrl+Alt+F12 sluit het af
+dutch.KommentarEditor=Je eigen vizier tekenen
+polish.TypVoll=Celownik i edytor
+polish.TypKreuz=Tylko celownik
+polish.TypEditor=Tylko edytor
+polish.TypEigene=Wybór własny
+polish.KomponenteKreuz=Celownik: nakładka na środku ekranu (około 1 MB RAM)
+polish.KomponenteEditor=Edytor: rysuj własne celowniki (zajmuje pamięć tylko, gdy jest otwarty)
+polish.GruppeExtra=Dodatkowo:
+polish.AufgabeDesktop=Skróty na pulpicie
+polish.AufgabeAutostart=Uruchamiaj celownik razem z Windows
+polish.AufgabeOben=Pokazuj nad wszystkim: także nad menu Start, paskiem zadań i nakładkami (tworzy certyfikat ważny tylko na tym komputerze)
+polish.StartKreuz=Włącz celownik teraz
+polish.StartEditor=Otwórz edytor
+polish.StatusSignieren=Celownik jest przygotowywany, żeby był nad wszystkim …
+polish.KommentarKreuz=Celownik wł./wył.: Ctrl+Alt+F9 ukrywa, Ctrl+Alt+F12 zamyka
+polish.KommentarEditor=Narysuj własny celownik
+brazilianportuguese.TypVoll=Mira e editor
+brazilianportuguese.TypKreuz=Só a mira
+brazilianportuguese.TypEditor=Só o editor
+brazilianportuguese.TypEigene=Escolher eu mesmo
+brazilianportuguese.KomponenteKreuz=Mira: o overlay no centro da tela (cerca de 1 MB de RAM)
+brazilianportuguese.KomponenteEditor=Editor: desenhe suas próprias miras (só usa memória enquanto está aberto)
+brazilianportuguese.GruppeExtra=Além disso:
+brazilianportuguese.AufgabeDesktop=Atalhos na área de trabalho
+brazilianportuguese.AufgabeAutostart=Iniciar a mira com o Windows
+brazilianportuguese.AufgabeOben=Mostrar acima de tudo: também acima do menu Iniciar, da barra de tarefas e de overlays (cria um certificado válido só neste PC)
+brazilianportuguese.StartKreuz=Ligar a mira agora
+brazilianportuguese.StartEditor=Abrir o editor
+brazilianportuguese.StatusSignieren=Preparando a mira para ficar acima de tudo …
+brazilianportuguese.KommentarKreuz=Mira liga/desliga: Ctrl+Alt+F9 esconde, Ctrl+Alt+F12 fecha
+brazilianportuguese.KommentarEditor=Desenhar sua própria mira
+turkish.TypVoll=Nişangah ve düzenleyici
+turkish.TypKreuz=Yalnızca nişangah
+turkish.TypEditor=Yalnızca düzenleyici
+turkish.TypEigene=Kendim seçeceğim
+turkish.KomponenteKreuz=Nişangah: ekranın ortasındaki katman (yaklaşık 1 MB RAM)
+turkish.KomponenteEditor=Düzenleyici: kendi nişangahlarınızı çizin (yalnızca açıkken bellek kullanır)
+turkish.GruppeExtra=Ek olarak:
+turkish.AufgabeDesktop=Masaüstü kısayolları
+turkish.AufgabeAutostart=Nişangahı Windows ile başlat
+turkish.AufgabeOben=Her şeyin üstünde göster: Başlat menüsü, görev çubuğu ve katmanların da üstünde (yalnızca bu bilgisayarda geçerli bir sertifika oluşturur)
+turkish.StartKreuz=Nişangahı şimdi aç
+turkish.StartEditor=Düzenleyiciyi aç
+turkish.StatusSignieren=Nişangah her şeyin üstünde kalacak şekilde ayarlanıyor …
+turkish.KommentarKreuz=Nişangah aç/kapat: Ctrl+Alt+F9 gizler, Ctrl+Alt+F12 kapatır
+turkish.KommentarEditor=Kendi nişangahınızı çizin
+russian.TypVoll=Прицел и редактор
+russian.TypKreuz=Только прицел
+russian.TypEditor=Только редактор
+russian.TypEigene=Выбрать самому
+russian.KomponenteKreuz=Прицел: оверлей в центре экрана (около 1 МБ ОЗУ)
+russian.KomponenteEditor=Редактор: рисуйте свои прицелы (занимает память, только пока открыт)
+russian.GruppeExtra=Дополнительно:
+russian.AufgabeDesktop=Ярлыки на рабочем столе
+russian.AufgabeAutostart=Запускать прицел вместе с Windows
+russian.AufgabeOben=Показывать поверх всего: также поверх меню «Пуск», панели задач и оверлеев (создаёт сертификат, действующий только на этом ПК)
+russian.StartKreuz=Включить прицел сейчас
+russian.StartEditor=Открыть редактор
+russian.StatusSignieren=Прицел настраивается, чтобы быть поверх всего …
+russian.KommentarKreuz=Прицел вкл./выкл.: Ctrl+Alt+F9 скрывает, Ctrl+Alt+F12 закрывает
+russian.KommentarEditor=Нарисовать свой прицел
+japanese.TypVoll=照準とエディター
+japanese.TypKreuz=照準のみ
+japanese.TypEditor=エディターのみ
+japanese.TypEigene=自分で選ぶ
+japanese.KomponenteKreuz=照準：画面中央のオーバーレイ（約 1 MB の RAM）
+japanese.KomponenteEditor=エディター：自分の照準を描く（開いている間だけメモリを使います）
+japanese.GruppeExtra=追加：
+japanese.AufgabeDesktop=デスクトップのショートカット
+japanese.AufgabeAutostart=Windows と一緒に照準を起動
+japanese.AufgabeOben=すべての上に表示：スタート メニュー、タスクバー、オーバーレイの上にも表示（この PC だけで有効な証明書を作成します）
+japanese.StartKreuz=今すぐ照準をオンにする
+japanese.StartEditor=エディターを開く
+japanese.StatusSignieren=照準を常に最前面に表示できるよう設定しています …
+japanese.KommentarKreuz=照準のオン/オフ：Ctrl+Alt+F9 で隠し、Ctrl+Alt+F12 で終了
+japanese.KommentarEditor=自分の照準を描く
+korean.TypVoll=조준점과 편집기
+korean.TypKreuz=조준점만
+korean.TypEditor=편집기만
+korean.TypEigene=직접 고르기
+korean.KomponenteKreuz=조준점: 화면 가운데의 오버레이 (약 1 MB RAM)
+korean.KomponenteEditor=편집기: 나만의 조준점 그리기 (열려 있는 동안만 메모리 사용)
+korean.GruppeExtra=추가:
+korean.AufgabeDesktop=바탕 화면 바로 가기
+korean.AufgabeAutostart=Windows와 함께 조준점 시작
+korean.AufgabeOben=모든 것 위에 표시: 시작 메뉴, 작업 표시줄, 오버레이 위에도 표시 (이 PC에서만 유효한 인증서를 만듭니다)
+korean.StartKreuz=지금 조준점 켜기
+korean.StartEditor=편집기 열기
+korean.StatusSignieren=조준점이 모든 것 위에 있도록 설정하는 중 …
+korean.KommentarKreuz=조준점 켜기/끄기: Ctrl+Alt+F9로 숨기고 Ctrl+Alt+F12로 종료
+korean.KommentarEditor=나만의 조준점 그리기
 
 [Types]
 Name: "voll"; Description: "{cm:TypVoll}"

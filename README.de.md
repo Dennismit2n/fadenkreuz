@@ -2,7 +2,7 @@
 
 **Dein eigenes Fadenkreuz exakt in der Bildschirmmitte – selbst gezeichnet, mit rund 1 MB Arbeitsspeicher.** Ein winziges Windows-Overlay, das über deinem Spiel liegt, jeden Klick durchlässt und zeigt, was du im Editor gezeichnet hast. Ab Werk Neongrün auf Schwarz.
 
-![Windows](https://img.shields.io/badge/Windows-10%20%7C%2011-33ff88) ![RAM](https://img.shields.io/badge/RAM-rund%201%20MB-0b0d0c) ![Sprache](https://img.shields.io/badge/Sprache-Deutsch%20%7C%20Englisch-33ff88) ![Lizenz](https://img.shields.io/badge/Lizenz-MIT-0b0d0c)
+![Windows](https://img.shields.io/badge/Windows-10%20%7C%2011-33ff88) ![RAM](https://img.shields.io/badge/RAM-rund%201%20MB-0b0d0c) ![Sprachen](https://img.shields.io/badge/Sprachen-14-33ff88) ![Lizenz](https://img.shields.io/badge/Lizenz-MIT-0b0d0c)
 
 [English version](README.md)
 
@@ -71,7 +71,7 @@ Das erlaubt Windows (es heißt *UIAccess*, wie bei der Bildschirmtastatur) nur s
 - **Nur der Hauptbildschirm.**
 - Spiele im **exklusiven Vollbild** übermalen jedes Overlay. Stell das Spiel auf *randloses Fenster* bzw. *Vollbild im Fenster*.
 - **Anti-Cheat:** Fadenkreuz fasst das Spiel nicht an – es ist ein eigenes Fenster. Trotzdem mögen einige Wettkampf-Spiele keine Overlays; prüf das vor Ranglisten-Spielen.
-- Editor und Setup sprechen Deutsch und Englisch. Der Editor folgt der Sprache deines Browsers und hat oben einen Umschalter DE/EN.
+- Der Editor spricht 14 Sprachen (Deutsch, Englisch, Spanisch, Französisch, Italienisch, Niederländisch, Polnisch, Portugiesisch, Türkisch, Russisch, Hindi, Chinesisch, Japanisch, Koreanisch). Er folgt der Sprache deines Browsers und hat oben eine Sprachliste. Das Setup spricht dieselben Sprachen außer Chinesisch und Hindi, die Inno Setup nicht mitbringt; dort zeigt es Englisch.
 
 ## Bildformat
 
