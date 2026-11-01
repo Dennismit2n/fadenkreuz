@@ -29,7 +29,9 @@ UninstallDisplayIcon={app}\fadenkreuz.exe,0
 UninstallDisplayName=Fadenkreuz
 Compression=lzma2/max
 SolidCompression=yes
-WizardStyle=modern
+; Immer dunkel, auch bei hellem Windows (Dennis' Wahl vom 01.11.2026). Bilder und Symbole
+; tauscht Inno Setup dann selbst gegen die dunklen Fassungen.
+WizardStyle=modern dark
 ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64compatible
 MinVersion=10.0
@@ -38,7 +40,9 @@ VersionInfoVersion={#Version}
 VersionInfoDescription=Fadenkreuz Setup
 
 [Languages]
-; Englisch zuerst: Wo Inno Setup keine Übersetzung mitbringt (Hindi), zeigt das Setup Englisch.
+; Englisch zuerst: Standard für jede Windows-Sprache, die hier fehlt.
+; Hindi gibt es von Inno Setup nicht (nur eine inoffizielle Datei für 5.5.3). Hindi.isl daneben ist
+; eine eigene, maschinelle Übersetzung der Default.isl von 6.7.3.
 ; Chinesisch ist die offizielle Inno-Übersetzung aus github.com/jrsoftware/issrc (Files/Languages),
 ; sie liegt hier daneben, weil Inno Setup 6.7 sie noch nicht mitbringt.
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -51,6 +55,7 @@ Name: "polish"; MessagesFile: "compiler:Languages\Polish.isl"
 Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"
 Name: "turkish"; MessagesFile: "compiler:Languages\Turkish.isl"
 Name: "russian"; MessagesFile: "compiler:Languages\Russian.isl"
+Name: "hindi"; MessagesFile: "Hindi.isl"
 Name: "chinesesimplified"; MessagesFile: "ChineseSimplified.isl"
 Name: "japanese"; MessagesFile: "compiler:Languages\Japanese.isl"
 Name: "korean"; MessagesFile: "compiler:Languages\Korean.isl"
@@ -64,26 +69,26 @@ german.TypEditor=Nur den Editor
 english.TypEditor=Editor only
 german.TypEigene=Selbst auswählen
 english.TypEigene=Custom selection
-german.KomponenteKreuz=Fadenkreuz – das Overlay in der Bildschirmmitte (rund 1 MB RAM)
-english.KomponenteKreuz=Crosshair – the overlay in the centre of the screen (about 1 MB of RAM)
-german.KomponenteEditor=Editor – eigene Fadenkreuze zeichnen (braucht nur Speicher, solange er offen ist)
-english.KomponenteEditor=Editor – draw your own crosshairs (only uses memory while it is open)
+german.KomponenteKreuz=Fadenkreuz: das Overlay in der Bildschirmmitte (rund 1 MB RAM)
+english.KomponenteKreuz=Crosshair: the overlay in the centre of the screen (about 1 MB of RAM)
+german.KomponenteEditor=Editor: eigene Fadenkreuze zeichnen (braucht nur Speicher, solange er offen ist)
+english.KomponenteEditor=Editor: draw your own crosshairs (only uses memory while it is open)
 german.GruppeExtra=Zusätzlich:
 english.GruppeExtra=Additionally:
 german.AufgabeDesktop=Verknüpfungen auf dem Desktop
 english.AufgabeDesktop=Desktop shortcuts
 german.AufgabeAutostart=Fadenkreuz mit Windows starten
 english.AufgabeAutostart=Start the crosshair with Windows
-german.AufgabeOben=Über allem anzeigen – auch über Startmenü, Taskleiste und Overlays (legt ein Zertifikat an, das nur auf diesem PC gilt)
-english.AufgabeOben=Show on top of everything – also above Start menu, taskbar and overlays (creates a certificate that is only valid on this PC)
+german.AufgabeOben=Über allem anzeigen, auch über Startmenü, Taskleiste und Overlays (legt ein Zertifikat an, das nur auf diesem PC gilt)
+english.AufgabeOben=Show on top of everything, also above Start menu, taskbar and overlays (creates a certificate that is only valid on this PC)
 german.StartKreuz=Fadenkreuz jetzt einschalten
 english.StartKreuz=Switch the crosshair on now
 german.StartEditor=Editor öffnen
 english.StartEditor=Open the editor
 german.StatusSignieren=Fadenkreuz wird für „über allem“ eingerichtet …
 english.StatusSignieren=Setting up the crosshair to stay on top of everything …
-german.KommentarKreuz=Fadenkreuz ein/aus – Strg+Alt+F9 blendet aus, Strg+Alt+F12 beendet
-english.KommentarKreuz=Crosshair on/off – Ctrl+Alt+F9 hides it, Ctrl+Alt+F12 quits
+german.KommentarKreuz=Fadenkreuz ein/aus: Strg+Alt+F9 blendet aus, Strg+Alt+F12 beendet
+english.KommentarKreuz=Crosshair on/off: Ctrl+Alt+F9 hides it, Ctrl+Alt+F12 quits
 german.KommentarEditor=Eigenes Fadenkreuz zeichnen
 english.KommentarEditor=Draw your own crosshair
 spanish.TypVoll=Punto de mira y editor
@@ -251,6 +256,21 @@ korean.StartEditor=편집기 열기
 korean.StatusSignieren=조준점이 모든 것 위에 있도록 설정하는 중 …
 korean.KommentarKreuz=조준점 켜기/끄기: Ctrl+Alt+F9로 숨기고 Ctrl+Alt+F12로 종료
 korean.KommentarEditor=나만의 조준점 그리기
+hindi.TypVoll=क्रॉसहेयर और एडिटर
+hindi.TypKreuz=केवल क्रॉसहेयर
+hindi.TypEditor=केवल एडिटर
+hindi.TypEigene=खुद चुनें
+hindi.KomponenteKreuz=क्रॉसहेयर: स्क्रीन के बीच में ओवरले (लगभग 1 MB RAM)
+hindi.KomponenteEditor=एडिटर: अपने खुद के क्रॉसहेयर बनाएँ (केवल खुला रहने पर मेमोरी लेता है)
+hindi.GruppeExtra=अतिरिक्त:
+hindi.AufgabeDesktop=डेस्कटॉप पर शॉर्टकट
+hindi.AufgabeAutostart=Windows के साथ क्रॉसहेयर शुरू करें
+hindi.AufgabeOben=सबसे ऊपर दिखाएँ: स्टार्ट मेनू, टास्कबार और ओवरले के ऊपर भी (एक प्रमाणपत्र बनाता है, जो केवल इसी PC पर मान्य है)
+hindi.StartKreuz=क्रॉसहेयर अभी चालू करें
+hindi.StartEditor=एडिटर खोलें
+hindi.StatusSignieren=क्रॉसहेयर को सबसे ऊपर रहने के लिए सेट किया जा रहा है …
+hindi.KommentarKreuz=क्रॉसहेयर चालू/बंद: Ctrl+Alt+F9 छिपाता है, Ctrl+Alt+F12 बंद करता है
+hindi.KommentarEditor=अपना खुद का क्रॉसहेयर बनाएँ
 
 [Types]
 Name: "voll"; Description: "{cm:TypVoll}"
