@@ -43,10 +43,11 @@ VersionInfoDescription=Fadenkreuz Setup
 ; Englisch zuerst: Standard für jede Windows-Sprache, die hier fehlt.
 ; Hindi gibt es von Inno Setup nicht (nur eine inoffizielle Datei für 5.5.3). Hindi.isl daneben ist
 ; eine eigene, maschinelle Übersetzung der Default.isl von 6.7.3.
+; GermanDu.isl ist das German.isl von 6.7.3 in Du-Form (Dennis' Wahl vom 01.11.2026).
 ; Chinesisch ist die offizielle Inno-Übersetzung aus github.com/jrsoftware/issrc (Files/Languages),
 ; sie liegt hier daneben, weil Inno Setup 6.7 sie noch nicht mitbringt.
 Name: "english"; MessagesFile: "compiler:Default.isl"
-Name: "german"; MessagesFile: "compiler:Languages\German.isl"
+Name: "german"; MessagesFile: "GermanDu.isl"
 Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
 Name: "french"; MessagesFile: "compiler:Languages\French.isl"
 Name: "italian"; MessagesFile: "compiler:Languages\Italian.isl"
