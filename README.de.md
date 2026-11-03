@@ -29,7 +29,7 @@ Im Installer wählst du beide oder nur einen der beiden. Sie hängen nicht vonei
 
 ## So geht’s los
 
-1. Lade **`Fadenkreuz-Setup-1.1.0.exe`** aus den [Releases](../../releases/latest). Windows meldet „Unbekannter Herausgeber“ – das Setup ist nicht signiert, weil das Geld kostet. Weiter mit **Weitere Informationen → Trotzdem ausführen**.
+1. Lade **`Fadenkreuz-Setup-1.2.3.exe`** aus den [Releases](../../releases/latest). Windows meldet „Unbekannter Herausgeber“ – das Setup ist nicht signiert, weil das Geld kostet. Weiter mit **Weitere Informationen → Trotzdem ausführen**.
 2. Wähle **Installation nur für Sie** (ohne Adminrechte) oder **Installation für alle Benutzer**, dann die Teile, die du willst.
 3. Starte **Fadenkreuz**: In der Bildschirmmitte erscheint ein grünes Kreuz.
 4. Öffne den **Fadenkreuz-Editor**, zeichne, klick einmal auf **Speichern unter …** und speichere als `fadenkreuz.bmp` in `Dokumente\Fadenkreuz`. Der Editor merkt sich die Datei; mit **live** erscheint jeder Strich innerhalb einer Sekunde auf dem Bildschirm.
@@ -91,7 +91,7 @@ Du brauchst Visual Studio oder die Build Tools mit den C++-Werkzeugen und für d
 bauen.bat
 ```
 
-Das ergibt `build\fadenkreuz.exe`, `build\fadenkreuz-oben.exe` (die UIAccess-Fassung) und `build\Fadenkreuz-Setup-1.1.0.exe`. Die Version steht in `bauen.bat` und `src\fadenkreuz.rc`. Die Icons zeichnet `tools\icons.py` (Python mit Pillow).
+Das ergibt `build\fadenkreuz.exe`, `build\fadenkreuz-oben.exe` (die UIAccess-Fassung) und `build\Fadenkreuz-Setup-1.2.3.exe`. Die Version steht in `bauen.bat` und `src\fadenkreuz.rc`. Die Icons zeichnet `tools\icons.py` (Python mit Pillow).
 
 | Ordner | Inhalt |
 |---|---|

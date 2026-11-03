@@ -29,7 +29,7 @@ In the installer you choose both or just one of them. They do not depend on each
 
 ## Getting started
 
-1. Download **`Fadenkreuz-Setup-1.1.0.exe`** from the [releases](../../releases/latest). Windows will say "unknown publisher" – the setup is not signed, because that costs money. Continue via **More info → Run anyway**.
+1. Download **`Fadenkreuz-Setup-1.2.3.exe`** from the [releases](../../releases/latest). Windows will say "unknown publisher" – the setup is not signed, because that costs money. Continue via **More info → Run anyway**.
 2. Choose **Install for me only** (no admin rights needed) or **Install for all users**, then the parts you want.
 3. Start **Fadenkreuz**: a green cross appears in the middle of the screen.
 4. Open **Fadenkreuz-Editor**, draw, click **Save as …** once and save as `fadenkreuz.bmp` in `Documents\Fadenkreuz`. The editor remembers the file; with **live** switched on, every stroke shows up on screen within a second.
@@ -91,7 +91,7 @@ You need Visual Studio or the Build Tools with the C++ workload, and [Inno Setup
 bauen.bat
 ```
 
-That produces `build\fadenkreuz.exe`, `build\fadenkreuz-oben.exe` (the UIAccess variant) and `build\Fadenkreuz-Setup-1.1.0.exe`. The version lives in `bauen.bat` and `src\fadenkreuz.rc`. The icons are drawn by `tools\icons.py` (Python with Pillow).
+That produces `build\fadenkreuz.exe`, `build\fadenkreuz-oben.exe` (the UIAccess variant) and `build\Fadenkreuz-Setup-1.2.3.exe`. The version lives in `bauen.bat` and `src\fadenkreuz.rc`. The icons are drawn by `tools\icons.py` (Python with Pillow).
 
 | Folder | Contents |
 |---|---|
