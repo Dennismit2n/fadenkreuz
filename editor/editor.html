@@ -1097,6 +1097,13 @@ function uebersetzen() {
   for (const el of $$('[data-t-aria]')) el.setAttribute('aria-label', t(el.dataset.tAria));
   for (const el of $$('[data-t-ph]')) el.placeholder = t(el.dataset.tPh);
   for (const b of $$('#muster button')) b.setAttribute('aria-label', t('farbeMuster', b.dataset.farbe));
+  // Gleiche Wörter an zwei Stellen („dunkel“ im Feld und in der Vorschau, „Deckkraft“ bei Farbe und
+  // Umrandung) bekommen ihren Ort vorn dran, damit Bildschirmleser und Testwerkzeuge sie unterscheiden.
+  const trenner = { zh: '：', ja: '：', fr: ' : ' }[sprache] || ': ';
+  for (const b of $$('.segment[data-t-aria] > [data-t]'))
+    b.setAttribute('aria-label', t(b.parentElement.dataset.tAria) + trenner + t(b.dataset.t));
+  for (const r of $$('.regler input[type=range]'))
+    r.setAttribute('aria-label', t(r.closest('.karte').querySelector('h2').dataset.t) + trenner + t(r.previousElementSibling.dataset.t));
   $('#sprachwahl').value = sprache;
   dateiStatus(letzterStatus.art, letzterStatus.schluessel, ...letzterStatus.werte);
 }
