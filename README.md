@@ -1,12 +1,12 @@
 # Fadenkreuz 🎯
 
-**Your own crosshair in the exact centre of the screen, drawn by you, running on about 1 MB of RAM.** A tiny Windows overlay that sits on top of your game, lets every click pass through, and shows whatever you drew in its editor. Neon green on black by default.
+**Your own crosshair in the exact center of the screen, drawn by you, running on about 1 MB of RAM.** A tiny Windows overlay that sits on top of your game, lets every click pass through, and shows whatever you drew in its editor. Neon green on black by default.
 
 ![Windows](https://img.shields.io/badge/Windows-10%20%7C%2011-33ff88) ![RAM](https://img.shields.io/badge/RAM-about%201%20MB-0b0d0c) ![Languages](https://img.shields.io/badge/Languages-14-33ff88) ![License](https://img.shields.io/badge/License-MIT-0b0d0c)
 
 [Deutsche Fassung](README.de.md) · The editor and the setup speak 14 languages.
 
-<p><img src="docs/editor-en.webp" width="55.2%" alt="The editor: a green cross with a thin black outline on a chequered grid, your own crosshairs and templates on the right, a preview against a game-like scene"> <img src="docs/klein.webp" width="43%" alt="The middle of four screens at full height, each with the crosshair in the centre, on a grey, purple, white and black background"></p>
+<p><img src="docs/editor-en.webp" width="55.2%" alt="The editor: a green cross with a thin black outline on a checkered grid, your own crosshairs and templates on the right, a preview against a game-like scene"> <img src="docs/klein.webp" width="43%" alt="The middle of four screens at full height, each with the crosshair in the center, on a gray, purple, white and black background"></p>
 
 <sub>Right: the middle of four screens at full height, the crosshair at its real size relative to the screen. This is how small it can look in a game.</sub>
 
@@ -46,13 +46,13 @@ In the installer you choose both or just one of them. They do not depend on each
 
 ![The template “White oval”: a white oval with smoothed edges and a soft black outline on a scene background (screenshot with the German interface)](docs/oval.webp)
 
-- **Tools:** pencil, eraser, line, ring, filled oval, fill and colour picker; the right mouse button always erases.
+- **Tools:** pencil, eraser, line, ring, filled oval, fill and color picker; the right mouse button always erases.
 - **Mirroring** left/right, top/bottom or four ways: a symmetrical crosshair in a few strokes.
-- **Outline** 0 to 4 pixels in any colour and opacity, optionally fading out softly.
+- **Outline** 0 to 4 pixels in any color and opacity, optionally fading out softly.
 - **Templates:** cross, cross + dot, dot, round dot, T, X, ring + dot and **White oval**, a white oval with smoothed edges and a soft black outline. Size, thickness and gap are adjustable.
 - **My crosshairs:** save your own designs under a name, load them with one click, and back them all up to a file (or read them back in, e.g. on another PC).
 - **Preview** at true size (1:1), 2× or 4× against a game-like scene, dark or light.
-- Undo and redo, adjustable field size, a pixel-exact grid that marks the centre.
+- Undo and redo, adjustable field size, a pixel-exact grid that marks the center.
 
 Edge and Chrome save straight into the file. Firefox cannot do that and downloads the image instead.
 
@@ -64,7 +64,7 @@ Press <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>F10</kbd> while a game is in front, an
 
 Normally the crosshair is an "always on top" window: above your game, but below the Start menu, taskbar pop-ups and some overlays. If you choose **Install for all users**, the installer offers **Show on top of everything**.
 
-Windows only allows that (it is called *UIAccess*, the same as for the on-screen keyboard) for signed programs inside *Program Files*. So the setup creates a certificate that is only valid on this PC, signs Fadenkreuz with it and deletes the private key immediately afterwards. Nobody can sign anything else with it. Uninstalling removes the certificate again. If anything goes wrong, the normal version stays in place.
+Windows only allows that (it is called *UIAccess*, the same as for the on-screen keyboard) for signed programs inside *Program Files*. So the setup creates a certificate that is only valid on this PC, signs Fadenkreuz with it and deletes the private key immediately afterward. Nobody can sign anything else with it. Uninstalling removes the certificate again. If anything goes wrong, the normal version stays in place.
 
 ## Limits
 
@@ -75,7 +75,7 @@ Windows only allows that (it is called *UIAccess*, the same as for the on-screen
 
 ## Image format
 
-`fadenkreuz.bmp` is a 32-bit BMP with transparency, or a 24-bit BMP in which magenta `#FF00FF` counts as transparent. So even Paint works. With an odd size the centre pixel lands exactly on the centre of the screen.
+`fadenkreuz.bmp` is a 32-bit BMP with transparency, or a 24-bit BMP in which magenta `#FF00FF` counts as transparent. So even Paint works. With an odd size the center pixel lands exactly on the center of the screen.
 
 Where Fadenkreuz looks for its files, in this order: a folder or `.bmp` given as argument → the folder named in a `datenordner.txt` next to the exe → the exe’s own folder, if a `fadenkreuz.bmp` already lies there (portable use) → `Documents\Fadenkreuz`.
 
@@ -101,7 +101,7 @@ That produces `build\fadenkreuz.exe`, `build\fadenkreuz-oben.exe` (the UIAccess 
 | `tools/` | icon generator |
 | `docs/` | screenshots |
 
-## Licence
+## License
 
 MIT, see [LICENSE](LICENSE). © 2026 Dennis_mit_2n
 
